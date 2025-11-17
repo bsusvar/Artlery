@@ -1,5 +1,6 @@
 package com.example.artlery
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -36,6 +37,8 @@ class MainActivity : ComponentActivity() {
             }
         }
         Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, AboutActivity::class.java))
+            finish()
         }, 3000)
     }
 }

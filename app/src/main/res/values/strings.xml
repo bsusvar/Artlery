@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Artlery</string>
+    <string name="descripcionApp">
+        Artlery es la primera red social dedicada a las artes plásticas.\n
+        Aprende más sobre tus obras favoritas, colabora en la difusión del conocimiento y construye comunidad.\n
+        Un oasis cultural por y para amantes de lo creativo.\n
+        Versión actual de la app: %1$s
+    </string>
 </resources>
