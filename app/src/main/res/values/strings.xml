@@ -17,4 +17,6 @@
     <string name="location">Localización</string>
     <string name="piece_not_found">Obra no encontrada</string>
     <string name="back_button">Volver</string>
+    <string name="artlery_fav_list">Favoritos</string>
+    <string name="delete_desc">Descripción de la imagen</string>
 </resources>

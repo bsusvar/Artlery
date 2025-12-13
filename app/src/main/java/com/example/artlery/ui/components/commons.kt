@@ -113,7 +113,7 @@ fun StandardTextComp(
 
 
 @Composable
-fun MedHeaderComp(title: Int) {
+fun MedHeaderComp(title: String) {
     Surface(
         modifier = Modifier
             .padding(horizontal = 8.dp)
