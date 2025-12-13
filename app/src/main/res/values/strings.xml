@@ -9,4 +9,12 @@
     <string name="piece_list_med_exp_title">\"Pieces\"</string>
     <string name="more_content_desc">Placeholder</string>
     <string name="default_content_descrip">Placeholder para imágenes</string>
+    <string name="piece_list_compact_title">Lista de obras</string>
+    <string name="piece_image_desc">Imagen de la obra\n</string>
+    <string name="author">Autor:</string>
+    <string name="year">Fecha:</string>
+    <string name="style">Estilo:</string>
+    <string name="location">Localización</string>
+    <string name="piece_not_found">Obra no encontrada</string>
+    <string name="back_button">Volver</string>
 </resources>

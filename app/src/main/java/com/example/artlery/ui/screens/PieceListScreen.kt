@@ -9,9 +9,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.artlery.model.Piece
+import androidx.navigation.NavController
+import com.example.artlery.model.Datasource
+import com.example.artlery.ui.components.MedHeaderComp
+import com.example.artlery.ui.components.PieceCard
 
+// Incluir botón para favs
 @Composable
 fun PieceListCompactScreen(
     pieces: MutableList<Piece>,
@@ -54,4 +61,14 @@ navController = NavController,
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PieceListScreenPreview() {
+    PieceListCompactScreen(
+        Datasource.pieceList(),
+        navController = NavController(LocalContext.current),
+        modifier = Modifier
+    )
 }
