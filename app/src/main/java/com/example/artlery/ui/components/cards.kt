@@ -171,97 +171,162 @@ fun PieceCardLand(piece: Piece, onClick: () -> Unit) {
 }
 
 @Composable
-fun FavPieceCard(piece: Piece, onClick: () -> Unit) {
+fun FavPieceCard(
+    piece: Piece,
+    onCardClick: () -> Unit,
+    onRemoveFromFav: (Piece) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp)
-            .clickable { onClick() },
+            .padding(vertical = 5.dp, horizontal = 10.dp)
+            .clickable { onCardClick() }
     ) {
         Row(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceBetween // Para texto a la izquierda y botón a la derecha
+            //  horizontalArrangement = Arrangement.SpaceAround
         ) {
-            // Imagen
-            ImageComp(
-                modifier = Modifier,
-                drawable = Datasource.getDrawableIdByName(piece.photo),
-                height = 100,
-                width = 100
-            )
-            // Atributos
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 20.dp)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
             ) {
-                StandardTextComp(
-                    text = piece.name,
-                    style = MaterialTheme.typography.titleMedium
+                // Imagen
+                ImageComp(
+                    drawable = Datasource.getDrawableIdByName(piece.photo),
+                    height = 100,
+                    width = 100
                 )
-                Spacer(modifier = Modifier.height(5.dp))
-                StandardTextComp(
-                    text = piece.author,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                // Quizás a partir de aquí sobre
-                StandardTextComp(
-                    text = piece.year,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                StandardTextComp(
-                    text = piece.style,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                StandardTextComp(
-                    text = piece.location,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                Column(verticalArrangement = Arrangement.SpaceAround) {
-                    // Botón de acción con icono
-                    IconButton(
-                        onClick = {
-                            Log.d(
-                                "FavPieceCard",
-                                "Botón Eliminar pulsado"
-                            )
-                        },
-                        modifier = Modifier.size(50.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            modifier = Modifier.size(50.dp),
-                            contentDescription = stringResource(R.string.delete_desc),
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
-                    IconButton(
-                        onClick = {
-                            Log.d(
-                                "FavPieceCard",
-                                "Botón Más pulsado"
-                            )
-                        },
-                        modifier = Modifier.size(50.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.TwoTone.KeyboardArrowDown,
-                            modifier = Modifier.size(50.dp),
-                            contentDescription = stringResource(R.string.more_content_desc),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
+
+                Column(
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                ) {
+                    StandardTextComp(
+                        text = piece.name,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    StandardTextComp(
+                        text = piece.author,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    StandardTextComp(
+                        text = piece.year,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    StandardTextComp(
+                        text = piece.style,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    StandardTextComp(
+                        text = piece.location,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
+            IconButton(
+                onClick = {
+                    Log.d("FavPieceCard", "Botón Eliminar pulsado para ${piece.name}")
+                    onRemoveFromFav(piece)
+                },
+                modifier = Modifier.size(50.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Clear,
+                    modifier = Modifier.size(24.dp),
+                    contentDescription = stringResource(R.string.delete_desc),
+                    tint = MaterialTheme.colorScheme.error
+                )
+            }
+//            // Imagen
+//            ImageComp(
+//                modifier = Modifier,
+//                drawable = Datasource.getDrawableIdByName(piece.photo),
+//                height = 100,
+//                width = 100
+//            )
+//            // Atributos
+//            Column(
+//                modifier = Modifier
+//                    .weight(1f)
+//                    .padding(start = 20.dp)
+//            ) {
+//                StandardTextComp(
+//                    text = piece.name,
+//                    style = MaterialTheme.typography.titleMedium
+//                )
+//                Spacer(modifier = Modifier.height(5.dp))
+//                StandardTextComp(
+//                    text = piece.author,
+//                    style = MaterialTheme.typography.bodyMedium
+//                )
+//                // Quizás a partir de aquí sobre
+//                StandardTextComp(
+//                    text = piece.year,
+//                    style = MaterialTheme.typography.bodyMedium
+//                )
+//                StandardTextComp(
+//                    text = piece.style,
+//                    style = MaterialTheme.typography.bodyMedium
+//                )
+//                StandardTextComp(
+//                    text = piece.location,
+//                    style = MaterialTheme.typography.bodyMedium
+//                )
+//                Column(verticalArrangement = Arrangement.SpaceAround) {
+//                    // Botón de acción con icono
+//                    IconButton(
+//                        onClick = {
+//                            Log.d(
+//                                "FavPieceCard",
+//                                "Botón Eliminar pulsado"
+//                            )
+//                        },
+//                        modifier = Modifier.size(50.dp)
+//                    ) {
+//                        Icon(
+//                            imageVector = Icons.Default.Clear,
+//                            modifier = Modifier.size(50.dp),
+//                            contentDescription = stringResource(R.string.delete_desc),
+//                            tint = MaterialTheme.colorScheme.error
+//                        )
+//                    }
+//                    IconButton(
+//                        onClick = {
+//                            Log.d(
+//                                "FavPieceCard",
+//                                "Botón Más pulsado"
+//                            )
+//                        },
+//                        modifier = Modifier.size(50.dp)
+//                    ) {
+//                        Icon(
+//                            imageVector = Icons.TwoTone.KeyboardArrowDown,
+//                            modifier = Modifier.size(50.dp),
+//                            contentDescription = stringResource(R.string.more_content_desc),
+//                            tint = MaterialTheme.colorScheme.primary
+//                        )
+//                    }
+//                }
+//            }
         }
     }
 }
 
 @Composable
-fun FavPieceCardLand(piece: Piece, onClick: () -> Unit) {
+fun FavPieceCardLand(
+    piece: Piece,
+    onRemoveFromFav: (Piece) -> Unit,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 30.dp)
             .clickable { onClick() },
@@ -298,18 +363,30 @@ fun FavPieceCardLand(piece: Piece, onClick: () -> Unit) {
                         text = piece.author,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    // ...etc?
+                    StandardTextComp(
+                        text = piece.year,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    StandardTextComp(
+                        text = piece.style,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    StandardTextComp(
+                        text = piece.location,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                     IconButton(
                         onClick = {
                             Log.d(
                                 "FavPieceCard",
                                 "Botón Favorito pulsado"
                             )
+                            onRemoveFromFav(piece)
                         },
                         modifier = Modifier.size(50.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Clear,
+                            imageVector = Icons.Filled.Clear, // O Delete
                             modifier = Modifier.size(50.dp),
                             contentDescription = stringResource(R.string.delete_desc),
                             tint = MaterialTheme.colorScheme.error
@@ -324,6 +401,5 @@ fun FavPieceCardLand(piece: Piece, onClick: () -> Unit) {
                 )
             }
         }
-
     }
 }

@@ -32,6 +32,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.artlery.model.Datasource
+import com.example.artlery.model.Piece
 import com.example.artlery.ui.screens.FavListCompactScreen
 import com.example.artlery.ui.screens.FavListMedExpScreen
 import com.example.artlery.ui.screens.PieceDetailCompactScreen
@@ -98,6 +99,15 @@ fun ArtleryApp() {
         .map { it.destination.route }
         .collectAsState(initial = "")
 
+    val onFavToggle: (String) -> Unit = { pieceName ->
+        val piece = pieces.find { it.name == pieceName }
+        piece?.isFav = !(piece.isFav ?: false)
+    }
+
+    val onRemoveFromFav: (Piece) -> Unit = { pieceToRemove ->
+        pieceToRemove.isFav = false
+    }
+
     ArtleryComposeTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -137,6 +147,7 @@ fun ArtleryApp() {
                             FavListCompactScreen(
                                 pieces = pieces,
                                 navController = navController,
+                                onRemoveFromFav = onRemoveFromFav,
                                 Modifier.padding(8.dp)
                             )
                         }
@@ -145,6 +156,7 @@ fun ArtleryApp() {
                             FavListMedExpScreen(
                                 pieces = pieces,
                                 navController = navController,
+                                onRemoveFromFav = onRemoveFromFav,
                                 Modifier.padding(8.dp)
                             )
                         }
@@ -165,13 +177,14 @@ fun ArtleryApp() {
                         }
                     }
                 }
-                composable("hero_detail/{hero_name}") {
+                composable("piece_detail/{piece_name}") {
                     val pieceName = it.arguments?.getString("piece_name")
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
                             PieceDetailCompactScreen(
                                 pieceName = pieceName,
                                 navController = navController,
+                                onFavToggle = onFavToggle,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
@@ -180,6 +193,7 @@ fun ArtleryApp() {
                             PieceDetailCompactScreen(
                                 pieceName,
                                 navController = navController,
+                                onFavToggle = onFavToggle,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
