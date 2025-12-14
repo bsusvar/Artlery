@@ -1,10 +1,7 @@
 package com.example.artlery
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -56,30 +53,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//
-//        val splashScreen = installSplashScreen()
-//
-//        super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-//        setContent {
-//            ArtleryComposeTheme {
-//                Scaffold(
-//                    modifier = Modifier.fillMaxSize()
-//                ) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
-//            }
-//        }
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            startActivity(Intent(this, AboutActivity::class.java))
-//            finish()
-//        }, 3000)
-//    }
 }
 
 @Composable
@@ -228,21 +201,3 @@ data class BottomNavItem(
     val icon: ImageVector,
     val label: String
 )
-
-//
-
-//@Composable
-//fun Greeting(name: String, modifier: Modifier = Modifier) {
-//    Text(
-//        text = "Hello $name!",
-//        modifier = modifier
-//    )
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    ArtleryComposeTheme {
-//        Greeting("Android")
-//    }
-//}

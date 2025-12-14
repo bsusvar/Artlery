@@ -120,7 +120,7 @@ fun MedHeaderComp(title: String) {
             .fillMaxWidth(),
         shadowElevation = 2.dp,
         shape = MaterialTheme.shapes.medium,
-        color = Color.Red
+        color = MaterialTheme.colorScheme.tertiary
     ) {
         Box(
             modifier = Modifier

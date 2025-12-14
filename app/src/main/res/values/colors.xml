@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray_26">#292929</color>
     <color name="beige_logo">#F5EDE1</color>
+    <color name="list_title">#b2cfa7</color>
 </resources>

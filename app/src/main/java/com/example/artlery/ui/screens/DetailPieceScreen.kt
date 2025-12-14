@@ -35,53 +35,60 @@ fun PieceDetailCompactScreen(
     modifier: Modifier = Modifier
 ) {
     val piece = if (pieceName != null) Datasource.getPieceByName(pieceName) else null
-    Column(
-        modifier = modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    androidx.compose.material3.Surface(
+
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background // Usa el color de fondo del tema
     ) {
-        piece?.let {
-            // Imagen
-            ImageComp(
-                drawable = Datasource.getDrawableIdByName(it.photo),
-                contentDesc = stringResource(R.string.piece_image_desc),
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .padding(20.dp)
-                    .widthIn(200.dp, 300.dp)
-                    .fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            // Nombre
-            StandardTextComp(
-                text = piece.name,
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            piece?.let {
+                // Imagen
+                ImageComp(
+                    drawable = Datasource.getDrawableIdByName(it.photo),
+                    contentDesc = stringResource(R.string.piece_image_desc),
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .widthIn(200.dp, 300.dp)
+                        .fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                // Nombre
+                StandardTextComp(
+                    text = piece.name,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // Atributos
+                    StandardTextComp(text = "${stringResource(R.string.author)}: ${piece.author}")
+                    StandardTextComp(text = "${stringResource(R.string.year)}: ${piece.year}")
+                    StandardTextComp(text = "${stringResource(R.string.style)}: ${piece.style}")
+                    StandardTextComp(text = "${stringResource(R.string.location)}: ${piece.location}")
+                    Spacer(modifier = Modifier.height(15.dp))
+                    StandardTextComp(
+                        text = piece.description,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            } ?: StandardTextComp(
+                text = stringResource(R.string.piece_not_found),
                 style = MaterialTheme.typography.headlineMedium
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                // Atributos
-                StandardTextComp(text = "${stringResource(R.string.author)}: ${piece.author}")
-                StandardTextComp(text = "${stringResource(R.string.year)}: ${piece.year}")
-                StandardTextComp(text = "${stringResource(R.string.style)}: ${piece.style}")
-                StandardTextComp(text = "${stringResource(R.string.location)}: ${piece.location}")
-                Spacer(modifier = Modifier.height(15.dp))
-                StandardTextComp(
-                    text = piece.description,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        } ?: StandardTextComp(
-            text = stringResource(R.string.piece_not_found),
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(35.dp))
-        StandardButtonComp(
-            label = stringResource(R.string.back_button),
-            onClick = { navController.popBackStack() }
-        )
+            Spacer(modifier = Modifier.height(35.dp))
+            StandardButtonComp(
+                label = stringResource(R.string.back_button),
+                onClick = { navController.popBackStack() }
+            )
+        }
     }
 }
 

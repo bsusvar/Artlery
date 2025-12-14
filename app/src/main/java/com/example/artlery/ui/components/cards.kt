@@ -82,11 +82,11 @@ fun PieceCard(piece: Piece, onClick: () -> Unit) {
                     text = piece.location,
                     style = MaterialTheme.typography.bodyMedium // Añadir fonts
                 )
-                // Descripción
-                StandardTextComp(
-                    text = piece.description,
-                    style = MaterialTheme.typography.bodyMedium // Añadir fonts
-                )
+//                // Descripción
+//                StandardTextComp(
+//                    text = piece.description,
+//                    style = MaterialTheme.typography.bodyMedium // Añadir fonts
+//                )
             }
             // Botón de acción con icono para acciones futuras
             IconButton(
@@ -158,12 +158,12 @@ fun PieceCardLand(piece: Piece, onClick: () -> Unit) {
                         text = piece.location,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    Spacer(modifier = Modifier.padding(5.dp))
-                    StandardTextComp(
-                        text = stringResource(R.string.piece_description), // Comprobar si sale esto
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(bottom = 10.dp)
-                    )
+//                    Spacer(modifier = Modifier.padding(5.dp))
+//                    StandardTextComp(
+//                        text = stringResource(R.string.piece_description), // Comprobar si sale esto
+//                        style = MaterialTheme.typography.bodyMedium,
+//                        modifier = Modifier.padding(bottom = 10.dp)
+//                    )
                 }
             }
         }

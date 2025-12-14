@@ -82,11 +82,11 @@ object Datasource {
 
     fun getDrawableIdByName(name: String): Int {
         return when (name) {
-            "La Anunciación" -> R.drawable.anunciacion
-            "Estudio del retrato del papa Inocencio X" -> R.drawable.inocencio_x
-            "Perro semihundido" -> R.drawable.perro_semihundido
-            "La habitación azul" -> R.drawable.habitacion_azul
-            "Paseo a orillas del mar" -> R.drawable.paseo_orillas_mar
+            "anunciacion" -> R.drawable.anunciacion
+            "inocencio_x" -> R.drawable.inocencio_x
+            "perro_semihundido" -> R.drawable.perro_semihundido
+            "habitacion_azul" -> R.drawable.habitacion_azul
+            "paseo_orillas_mar" -> R.drawable.paseo_orillas_mar
             else -> R.drawable.a_icono
         }
 
