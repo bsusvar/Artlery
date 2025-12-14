@@ -45,17 +45,6 @@ import androidx.compose.ui.unit.sp
 import com.example.artlery.R
 import com.example.artlery.ui.theme.ArtleryComposeTheme
 
-
-class AboutActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            AboutScreen()
-        }
-    }
-}
-
 @Composable
 fun AboutScreen() {
     ArtleryComposeTheme {

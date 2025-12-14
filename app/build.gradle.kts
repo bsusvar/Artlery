@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.compose.material3.window.size.class1)
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
     implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

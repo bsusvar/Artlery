@@ -160,7 +160,7 @@ fun PieceCardLand(piece: Piece, onClick: () -> Unit) {
                     )
                     Spacer(modifier = Modifier.padding(5.dp))
                     StandardTextComp(
-                        text = piece.description, // Comprobar si sale esto
+                        text = stringResource(R.string.piece_description), // Comprobar si sale esto
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
@@ -318,7 +318,7 @@ fun FavPieceCardLand(piece: Piece, onClick: () -> Unit) {
                 }
                 Spacer(modifier = Modifier.height(5.dp))
                 StandardTextComp(
-                    text = piece.description, // Comprobar
+                    text = stringResource(R.string.piece_description),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
