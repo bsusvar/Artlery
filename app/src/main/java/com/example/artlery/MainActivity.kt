@@ -1,5 +1,6 @@
 package com.example.artlery
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -86,6 +87,7 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
 }
 
 
+@SuppressLint("ContextCastToActivity")
 @Composable
 fun ArtleryApp() {
     val pieces = Datasource.getListXTimes(5)

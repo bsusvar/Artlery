@@ -35,9 +35,20 @@ fun PieceListCompactScreen(
                 .padding(8.dp)
         ) {
             items(pieces) { piece ->
-                PieceCard(piece = piece) {
-                    navController.navigate("piece_detail/${piece.name}")
+                val onFavToggle: (Piece) -> Unit = { p ->
+                    p.isFav = !p.isFav
+                    //  navController.navigate("fav_list")
                 }
+                PieceCard(
+                    piece = piece,
+                    onCardClick = {
+                        navController.navigate("piece_detail/${piece.name}")
+                    },
+                    onFavClick = { p ->
+                        onFavToggle(p)
+                        navController.navigate("fav_list")
+                    }
+                )
             }
         }
     }

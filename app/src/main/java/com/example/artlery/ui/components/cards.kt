@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.twotone.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -21,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,14 +32,18 @@ import com.example.artlery.model.Datasource
 import com.example.artlery.model.Piece
 
 @Composable
-fun PieceCard(piece: Piece, onClick: () -> Unit) {
+fun PieceCard(
+    piece: Piece,
+    onCardClick: () -> Unit,
+    onFavClick: (Piece) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
+        shape = MaterialTheme.shapes.large,
+        onClick = onCardClick,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onClick() },
-
-        shape = MaterialTheme.shapes.large // Cambiar a medium si eso
     ) {
         Row(
             modifier = Modifier.padding(10.dp),
@@ -90,14 +97,13 @@ fun PieceCard(piece: Piece, onClick: () -> Unit) {
             }
             // Botón de acción con icono para acciones futuras
             IconButton(
-                onClick = {},
-                modifier = Modifier.size(50.dp)
+                onClick = { onFavClick(piece) },
             )
             {
                 Icon(
-                    imageVector = Icons.TwoTone.KeyboardArrowDown, // Mirar
-                    modifier = Modifier.size(50.dp),
-                    contentDescription = stringResource(R.string.more_content_desc)
+                    imageVector = if (piece.isFav) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                    contentDescription = stringResource(R.string.favorite_button),
+                    tint = if (piece.isFav) Color.Red else Color.Gray
                 )
             }
         }

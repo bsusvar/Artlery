@@ -7,5 +7,6 @@ data class Piece(
     val year: String,
     val style: String,
     val location: String,
-    val description: String
+    val description: String,
+    var isFav: Boolean = false
 )
