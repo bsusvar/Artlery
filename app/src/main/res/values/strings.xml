@@ -38,4 +38,10 @@
     <string name="login_prompt">Inicia sesión para personalizar tu experiencia</string>
     <string name="welcome_user">Bienvenido, %s</string>
     <string name="profile_image_desc">Imagen de perfil del usuario</string>
+    <string name="add_comment_title">Añadir comentario</string>
+    <string name="commenting_as">Comentando como: %s</string>
+    <string name="comment_input_label">Tu comentario...</string>
+    <string name="send_button">Enviar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="app_logo_desc">Logo app</string>
 </resources>

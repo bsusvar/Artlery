@@ -22,7 +22,9 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -98,6 +100,10 @@ fun ArtleryApp() {
     val pieces = remember {
         Datasource.getListXTimes(5).toMutableStateList()
     }
+
+    var userName by remember { mutableStateOf("Visitante") }
+    var isLogged by remember { mutableStateOf(false) }
+
     val windowSize =
         getWindowSizeClass(LocalContext.current as Activity)
     val navController = rememberNavController()
@@ -113,6 +119,15 @@ fun ArtleryApp() {
         pieceToRemove.isFav = false
     }
 
+    val onLogin: (String) -> Unit = { newName ->
+        userName = newName
+        isLogged = true
+    }
+    val onLogout: () -> Unit = {
+        userName = "Visitante"
+        isLogged = false
+    }
+
     ArtleryComposeTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -124,7 +139,7 @@ fun ArtleryApp() {
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = "piece_list",
+                startDestination = "profile",
                 modifier = Modifier.padding(innerPadding)
             ) {
                 // Lista de obras
@@ -176,12 +191,21 @@ fun ArtleryApp() {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
                             ProfileCompactScreen(
-                                Modifier.padding(8.dp)
+                                isLogged = isLogged,
+                                userName = userName,
+                                onLogin = onLogin,
+                                onLogout = onLogout,
+                                navController = navController,
+                                // Modifier.padding(8.dp)
                             )
                         }
-
                         else -> {
                             ProfileCompactScreen(
+                                isLogged = isLogged,
+                                userName = userName,
+                                onLogin = onLogin,
+                                onLogout = onLogout,
+                                navController = navController,
                                 Modifier.padding(8.dp)
                             )
                         }
@@ -229,7 +253,7 @@ fun ArtleryApp() {
                                 pieceName = pieceName,
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
-                                // modifier = Modifier.padding(8.dp)
+                                userName = userName,
                             )
                         }
 
@@ -238,6 +262,7 @@ fun ArtleryApp() {
                                 pieceName = pieceName,
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
+                                userName = userName,
                             )
                         }
                     }

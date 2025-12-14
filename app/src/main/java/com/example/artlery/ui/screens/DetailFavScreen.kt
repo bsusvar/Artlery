@@ -3,17 +3,23 @@ package com.example.artlery.ui.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,6 +28,9 @@ import com.example.artlery.model.Datasource
 import com.example.artlery.ui.components.ImageComp
 import com.example.artlery.ui.components.StandardTextComp
 import com.example.artlery.ui.components.CommentCard
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 data class Comment(
@@ -31,9 +40,14 @@ data class Comment(
     val timestamp: String
 )
 
-private val sampleComments = listOf(
+private val initialSampleComments = listOf(
     Comment(1, "Ana Pérez.", "¡Me encanta la luz y la composición!", "hace 2 días"),
-    Comment(2, "Luis G.", "Muy interesante, la descripción me ayudó a entender el contexto.", "hace 1 día"),
+    Comment(
+        2,
+        "Luis G.",
+        "Muy interesante, la descripción me ayudó a entender el contexto.",
+        "hace 1 día"
+    ),
     Comment(3, "Laura P.", "Una de mis piezas favoritas de este período.", "hace 5 horas")
 )
 
@@ -43,20 +57,51 @@ private val sampleComments = listOf(
 fun DetailFavScreen(
     pieceName: String?,
     navController: NavController,
-    onFavToggle: (String) -> Unit, // Mantenemos el toggle por consistencia
-    comments: List<Comment> = sampleComments, // Lista de comentarios
+    onFavToggle: (String) -> Unit,
+    userName: String,
     modifier: Modifier = Modifier
 ) {
     val piece = if (pieceName != null) Datasource.getPieceByName(pieceName) else null
+    var comments by remember { mutableStateOf(initialSampleComments) }
+
+    var showCommentDialog by remember { mutableStateOf(false) }
+    var newCommentText by remember { mutableStateOf("") }
+
+    val onSendComment: () -> Unit = {
+        if (newCommentText.isNotBlank() && userName != "Visitante") {
+            val formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+            val time = LocalDateTime.now().format(formatter)
+
+            val newComment = Comment(
+                id = comments.size + 1,
+                author = userName,
+                text = newCommentText,
+                timestamp = "Hoy, $time"
+            )
+            comments = comments + newComment
+
+            newCommentText = ""
+            showCommentDialog = false
+        }
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {},
+                onClick = {
+                    if (userName != "Visitante") {
+                        showCommentDialog = true
+                    } else {
+                        println("ERROR: Debe iniciar sesión para comentar.")
+                    }
+                },
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Filled.AddComment, contentDescription = stringResource(R.string.add_comment_desc))
+                Icon(
+                    Icons.Filled.AddComment,
+                    contentDescription = stringResource(R.string.add_comment_desc)
+                )
             }
         },
 
@@ -65,22 +110,22 @@ fun DetailFavScreen(
                 title = { Text(piece?.name ?: stringResource(R.string.piece_not_found)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back_button))
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back_button)
+                        )
                     }
                 }
             )
         }
     ) { innerPadding ->
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             piece?.let { pieceData ->
-
                 item {
                     Row(
                         modifier = Modifier
@@ -144,7 +189,6 @@ fun DetailFavScreen(
                         )
                     }
                 }
-
                 items(comments) { comment ->
                     CommentCard(comment = comment)
                 }
@@ -160,6 +204,48 @@ fun DetailFavScreen(
                 )
             }
         }
+
+        if (showCommentDialog) {
+            AlertDialog(
+                onDismissRequest = { showCommentDialog = false },
+                title = { Text(text = stringResource(R.string.add_comment_title)) },
+                text = {
+                    Column {
+                        StandardTextComp(
+                            text = stringResource(R.string.commenting_as, userName),
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = newCommentText,
+                            onValueChange = { newCommentText = it },
+                            label = { Text(stringResource(R.string.comment_input_label)) },
+                            singleLine = false,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = onSendComment,
+                        enabled = newCommentText.isNotBlank()
+                    ) {
+                        Text(stringResource(R.string.send_button))
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        newCommentText = ""
+                        showCommentDialog = false
+                    }) {
+                        Text(stringResource(R.string.cancel_button))
+                    }
+                }
+            )
+        }
+
+
     }
 }
 
@@ -173,6 +259,7 @@ fun DetailFavScreenPreview() {
     DetailFavScreen(
         pieceName = "La Anunciación",
         navController = NavController(LocalContext.current),
-        onFavToggle = emptyToggle
+        onFavToggle = emptyToggle,
+        userName = "Visitante"
     )
 }
