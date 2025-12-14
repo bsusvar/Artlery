@@ -104,7 +104,7 @@ fun FavListScreenPreview() {
 
     val previewPieces = allPieces.mapIndexed { index, piece ->
 
-        if (index < 2) piece.copy(isFav = true) else piece
+        if (index < 2) piece.copy(isFavInitial = true) else piece
     }.toMutableList()
 
     FavListCompactScreen(

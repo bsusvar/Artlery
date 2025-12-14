@@ -1,12 +1,13 @@
 package com.example.artlery.model
 
+import androidx.compose.runtime.mutableStateListOf
 import com.example.artlery.R
 
 
 object Datasource {
 
-    val pieceList: () -> MutableList<Piece> = {
-        mutableListOf<Piece>(
+    val pieceList: () -> List<Piece> = {
+        mutableStateListOf(
             Piece(
                 "La Anunciación",
                 "anunciacion",
@@ -23,7 +24,7 @@ object Datasource {
                 "1953",
                 "Expresionismo",
                 "Des Moines Art Center (Estados Unidos)",
-                "Transformación del papa Inocencio X de Velázquez para convertirlo, en su versión, en el emblema de los horrores cometidos en nombre  de la religión a lo largo de la historia."
+                "Transformación del papa Inocencio X de Velázquez para convertirlo, en su versión, en el emblema de los horrores cometidos en nombre de la religión a lo largo de la historia."
             ),
             Piece(
                 "Perro semihundido",
