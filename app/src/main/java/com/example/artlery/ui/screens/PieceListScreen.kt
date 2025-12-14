@@ -17,14 +17,15 @@ import androidx.navigation.NavController
 import com.example.artlery.model.Datasource
 import com.example.artlery.ui.components.MedHeaderComp
 import com.example.artlery.ui.components.PieceCard
+import com.example.artlery.ui.components.PieceCardLand
 
 // Incluir botón para favs
 @Composable
 fun PieceListCompactScreen(
     pieces: MutableList<Piece>,
-navController = NavController,
+    navController: NavController,
     modifier: Modifier = Modifier
-    ) {
+) {
     Column(modifier = modifier.fillMaxSize()) {
         MedHeaderComp(title = R.string.piece_list_compact_title)
         LazyColumn(
@@ -44,9 +45,9 @@ navController = NavController,
 @Composable
 fun PieceListMedExpScreen(
     pieces: MutableList<Piece>,
-navController = NavController,
+    navController: NavController,
     modifier: Modifier = Modifier
-    ) {
+) {
     Column(modifier = modifier.fillMaxSize()) {
         MedHeaderComp(title = R.string.piece_list_med_exp_title)
         LazyColumn(

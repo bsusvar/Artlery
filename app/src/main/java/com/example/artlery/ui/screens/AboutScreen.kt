@@ -43,7 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.artlery.R
-import com.example.artlery.ui.theme.ArtleryTheme
+import com.example.artlery.ui.theme.ArtleryComposeTheme
 
 
 class AboutActivity : ComponentActivity() {
@@ -58,7 +58,7 @@ class AboutActivity : ComponentActivity() {
 
 @Composable
 fun AboutScreen() {
-    ArtleryTheme {
+    ArtleryComposeTheme {
         Scaffold(
             topBar = {
                 ToolBar()
@@ -182,7 +182,7 @@ fun Content(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .size(40.dp),
-                    imageVector = Icons.Filled.Email,
+                    imageVector = Icons.Default.Email,
                     tint = Color.DarkGray,
                     contentDescription = "Icono de envío",
                 )

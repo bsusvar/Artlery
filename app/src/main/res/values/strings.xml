@@ -11,12 +11,15 @@
     <string name="default_content_descrip">Placeholder para imágenes</string>
     <string name="piece_list_compact_title">Lista de obras</string>
     <string name="piece_image_desc">Imagen de la obra\n</string>
-    <string name="author">Autor:</string>
-    <string name="year">Fecha:</string>
-    <string name="style">Estilo:</string>
+    <string name="author">Autor</string>
+    <string name="year">Fecha</string>
+    <string name="style">Estilo</string>
     <string name="location">Localización</string>
     <string name="piece_not_found">Obra no encontrada</string>
     <string name="back_button">Volver</string>
     <string name="artlery_fav_list">Favoritos</string>
     <string name="delete_desc">Descripción de la imagen</string>
+    <string name="profile_name">Nombre usuario: %s</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="login">Iniciar sesión</string>
 </resources>

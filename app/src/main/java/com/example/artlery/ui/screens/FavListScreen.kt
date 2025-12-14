@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.example.artlery.model.Piece
 import com.example.artlery.ui.components.MedHeaderComp
 import com.example.artlery.R
+import com.example.artlery.ui.components.FavPieceCard
 import com.example.artlery.ui.components.FavPieceCardLand
 
 
@@ -60,4 +61,4 @@ fun FavListMedExpScreen(
             }
         }
     }
-)
+}
