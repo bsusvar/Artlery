@@ -164,12 +164,6 @@ fun PieceCardLand(piece: Piece, onClick: () -> Unit) {
                         text = piece.location,
                         style = MaterialTheme.typography.bodyMedium
                     )
-//                    Spacer(modifier = Modifier.padding(5.dp))
-//                    StandardTextComp(
-//                        text = stringResource(R.string.piece_description), // Comprobar si sale esto
-//                        style = MaterialTheme.typography.bodyMedium,
-//                        modifier = Modifier.padding(bottom = 10.dp)
-//                    )
                 }
             }
         }

@@ -9,10 +9,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -32,6 +38,7 @@ import com.example.artlery.ui.components.StandardTextComp
 fun PieceDetailCompactScreen(
     pieceName: String?,
     navController: NavController,
+    onFavToggle: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val piece = if (pieceName != null) Datasource.getPieceByName(pieceName) else null
@@ -46,6 +53,23 @@ fun PieceDetailCompactScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             piece?.let {
+                // Botón fav
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 10.dp),
+                    horizontalArrangement = Arrangement.End // Alinea a la derecha
+                ) {
+                    IconButton(
+                        onClick = { onFavToggle(it.name) } // Llama al callback con el nombre
+                    ) {
+                        Icon( // ??????????
+                            imageVector = if (it.isFav) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = stringResource(R.string.favorite_button),
+                            tint = if (it.isFav) Color.Red else Color.Gray
+                        )
+                    }
+                }
                 // Imagen
                 ImageComp(
                     drawable = Datasource.getDrawableIdByName(it.photo),
@@ -95,5 +119,8 @@ fun PieceDetailCompactScreen(
 @Preview
 @Composable
 fun PieceDetailCompactScreenPreview() {
-    PieceDetailCompactScreen("La Anunciación", NavController(LocalContext.current))
+    PieceDetailCompactScreen(
+        "La Anunciación",
+        NavController(LocalContext.current),
+        onFavToggle = {})
 }
