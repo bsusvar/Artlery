@@ -24,4 +24,5 @@
     <string name="login">Iniciar sesión</string>
     <string name="piece_list">Lista de obras</string>
     <string name="favorite_button">Botón favorito</string>
+    <string name="no_favorites_message">No hay obras favoritas aún.</string>
 </resources>

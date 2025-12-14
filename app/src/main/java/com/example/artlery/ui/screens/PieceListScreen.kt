@@ -25,6 +25,7 @@ import com.example.artlery.ui.components.PieceCardLand
 fun PieceListCompactScreen(
     pieces: MutableList<Piece>,
     navController: NavController,
+    onFavToggle: (Piece) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
@@ -35,19 +36,15 @@ fun PieceListCompactScreen(
                 .padding(8.dp)
         ) {
             items(pieces) { piece ->
-                val onFavToggle: (Piece) -> Unit = { p ->
-                    p.isFav = !p.isFav
-                    //  navController.navigate("fav_list")
-                }
+//                val onFavToggle: (Piece) -> Unit = { p ->
+//                    p.isFav = !p.isFav
+//                }
                 PieceCard(
                     piece = piece,
                     onCardClick = {
                         navController.navigate("piece_detail/${piece.name}")
                     },
-                    onFavClick = { p ->
-                        onFavToggle(p)
-                        navController.navigate("fav_list")
-                    }
+                    onFavClick = onFavToggle
                 )
             }
         }
@@ -58,6 +55,7 @@ fun PieceListCompactScreen(
 fun PieceListMedExpScreen(
     pieces: MutableList<Piece>,
     navController: NavController,
+    onFavToggle: (Piece) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
@@ -68,9 +66,14 @@ fun PieceListMedExpScreen(
                 .padding(8.dp)
         ) {
             items(pieces) { piece ->
-                PieceCardLand(piece) {
-                    navController.navigate("piece_detail/${piece.name}")
-                }
+                PieceCardLand(
+                    piece = piece,
+                    onClick = {
+                        navController.navigate("piece_detail/${piece.name}")
+                    },
+                    onFavClick = onFavToggle
+                )
+
             }
         }
     }
@@ -79,9 +82,12 @@ fun PieceListMedExpScreen(
 @Preview(showBackground = true)
 @Composable
 fun PieceListScreenPreview() {
+    val pieces = Datasource.pieceList().toMutableList()
+
     PieceListCompactScreen(
-        Datasource.pieceList(),
+        pieces = pieces,
         navController = NavController(LocalContext.current),
+        onFavToggle = {},
         modifier = Modifier
     )
 }

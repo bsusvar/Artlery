@@ -22,6 +22,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -91,7 +93,9 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
 @SuppressLint("ContextCastToActivity")
 @Composable
 fun ArtleryApp() {
-    val pieces = Datasource.getListXTimes(5)
+    val pieces = remember {
+        Datasource.getListXTimes(5).toMutableStateList()
+    }
     val windowSize =
         getWindowSizeClass(LocalContext.current as Activity)
     val navController = rememberNavController()
@@ -99,9 +103,8 @@ fun ArtleryApp() {
         .map { it.destination.route }
         .collectAsState(initial = "")
 
-    val onFavToggle: (String) -> Unit = { pieceName ->
-        val piece = pieces.find { it.name == pieceName }
-        piece?.isFav = !(piece.isFav ?: false)
+    val onFavToggle: (Piece) -> Unit = { pieceToToggle ->
+        pieceToToggle.isFav = !pieceToToggle.isFav
     }
 
     val onRemoveFromFav: (Piece) -> Unit = { pieceToRemove ->
@@ -128,6 +131,7 @@ fun ArtleryApp() {
                             PieceListCompactScreen(
                                 pieces = pieces,
                                 navController = navController,
+                                onFavToggle = onFavToggle,
                                 Modifier.padding(8.dp)
                             )
                         }
@@ -136,6 +140,7 @@ fun ArtleryApp() {
                             PieceListMedExpScreen(
                                 pieces = pieces,
                                 navController = navController,
+                                onFavToggle = onFavToggle,
                                 Modifier.padding(8.dp)
                             )
                         }
@@ -179,12 +184,16 @@ fun ArtleryApp() {
                 }
                 composable("piece_detail/{piece_name}") {
                     val pieceName = it.arguments?.getString("piece_name")
+                    val detailScreenToggle: (String) -> Unit = { name ->
+                        val pieceToToggle = pieces.find { p -> p.name == name }
+                        pieceToToggle?.let { onFavToggle(it) }
+                    }
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
                             PieceDetailCompactScreen(
                                 pieceName = pieceName,
                                 navController = navController,
-                                onFavToggle = onFavToggle,
+                                onFavToggle = detailScreenToggle,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
@@ -193,7 +202,7 @@ fun ArtleryApp() {
                             PieceDetailCompactScreen(
                                 pieceName,
                                 navController = navController,
-                                onFavToggle = onFavToggle,
+                                onFavToggle = detailScreenToggle,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }

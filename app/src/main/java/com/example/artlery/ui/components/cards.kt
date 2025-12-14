@@ -111,9 +111,13 @@ fun PieceCard(
 }
 
 @Composable
-fun PieceCardLand(piece: Piece, onClick: () -> Unit) {
+fun PieceCardLand(
+    piece: Piece, onClick: () -> Unit,
+    onFavClick: (Piece) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 30.dp)
             .clickable { onClick() },
@@ -164,6 +168,15 @@ fun PieceCardLand(piece: Piece, onClick: () -> Unit) {
                         text = piece.location,
                         style = MaterialTheme.typography.bodyMedium
                     )
+                    IconButton(
+                        onClick = { onFavClick(piece) }
+                    ) {
+                        Icon(
+                            imageVector = if (piece.isFav) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = stringResource(R.string.favorite_button),
+                            tint = if (piece.isFav) Color.Red else Color.Gray
+                        )
+                    }
                 }
             }
         }
