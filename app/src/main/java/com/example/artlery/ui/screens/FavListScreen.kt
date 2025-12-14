@@ -55,7 +55,7 @@ fun FavListCompactScreen(
                     FavPieceCard(
                         piece = piece,
                         onCardClick = {
-                            navController.navigate("piece_detail/${piece.name}")
+                            navController.navigate("detail_fav/${piece.name}")
                         },
                         onRemoveFromFav = onRemoveFromFav
                     )
@@ -88,7 +88,7 @@ fun FavListMedExpScreen(
                     piece = piece,
                     onRemoveFromFav = onRemoveFromFav,
                     onClick = {
-                        navController.navigate("piece_detail/${piece.name}")
+                        navController.navigate("detail_fav/${piece.name}")
                     }
                 )
             }

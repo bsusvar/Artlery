@@ -1,6 +1,5 @@
 package com.example.artlery.ui.components
 
-import android.inputmethodservice.Keyboard
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.twotone.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.artlery.R
@@ -413,6 +410,32 @@ fun FavPieceCardLand(
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+fun CommentCard(comment: com.example.artlery.ui.screens.Comment, modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            StandardTextComp(
+                text = comment.author,
+                style = MaterialTheme.typography.titleSmall
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            StandardTextComp(
+                text = comment.text,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            StandardTextComp(
+                text = comment.timestamp,
+                style = MaterialTheme.typography.labelSmall,
+            )
         }
     }
 }

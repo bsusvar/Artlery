@@ -41,6 +41,7 @@ import com.example.artlery.ui.screens.PieceDetailCompactScreen
 import com.example.artlery.ui.screens.PieceListCompactScreen
 import com.example.artlery.ui.screens.PieceListMedExpScreen
 import com.example.artlery.ui.screens.ProfileCompactScreen
+import com.example.artlery.ui.screens.DetailFavScreen
 import com.example.artlery.ui.theme.ArtleryComposeTheme
 import com.example.artlery.utils.getWindowSizeClass
 import kotlinx.coroutines.flow.map
@@ -182,7 +183,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
-                composable("piece_detail/{piece_name}") {
+                composable("piece_detail/{piece_name}") { it ->
                     val pieceName = it.arguments?.getString("piece_name")
                     val detailScreenToggle: (String) -> Unit = { name ->
                         val pieceToToggle = pieces.find { p -> p.name == name }
@@ -204,6 +205,33 @@ fun ArtleryApp() {
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
                                 modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                    }
+                }
+                composable("detail_fav/{piece_name}") { backStackEntry ->
+                    val pieceName = backStackEntry.arguments?.getString("piece_name")
+
+                    val detailScreenToggle: (String) -> Unit = { name ->
+                        val pieceToToggle = pieces.find { p -> p.name == name }
+                        pieceToToggle?.let { onFavToggle(it) }
+                    }
+
+                    when (windowSize) {
+                        WindowWidthSizeClass.Compact -> {
+                            DetailFavScreen(
+                                pieceName = pieceName,
+                                navController = navController,
+                                onFavToggle = detailScreenToggle,
+                                // modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        else -> {
+                            DetailFavScreen(
+                                pieceName = pieceName,
+                                navController = navController,
+                                onFavToggle = detailScreenToggle,
                             )
                         }
                     }

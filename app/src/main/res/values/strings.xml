@@ -25,4 +25,6 @@
     <string name="piece_list">Lista de obras</string>
     <string name="favorite_button">Botón favorito</string>
     <string name="no_favorites_message">No hay obras favoritas aún.</string>
+    <string name="add_comment_desc">Añadir comentario</string>
+    <string name="comments_title">Título del comentario</string>
 </resources>
