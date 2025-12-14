@@ -42,6 +42,7 @@ import com.example.artlery.ui.screens.PieceListCompactScreen
 import com.example.artlery.ui.screens.PieceListMedExpScreen
 import com.example.artlery.ui.screens.ProfileCompactScreen
 import com.example.artlery.ui.screens.DetailFavScreen
+import com.example.artlery.ui.screens.AboutScreen
 import com.example.artlery.ui.theme.ArtleryComposeTheme
 import com.example.artlery.utils.getWindowSizeClass
 import kotlinx.coroutines.flow.map
@@ -126,6 +127,7 @@ fun ArtleryApp() {
                 startDestination = "piece_list",
                 modifier = Modifier.padding(innerPadding)
             ) {
+                // Lista de obras
                 composable("piece_list") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
@@ -147,6 +149,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
+                // Lista de obras favoritas
                 composable("fav_list") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
@@ -168,6 +171,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
+               // Perfil de usuario
                 composable("profile") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
@@ -183,6 +187,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
+               // Ver obra en detalle desde la lista de obras
                 composable("piece_detail/{piece_name}") { it ->
                     val pieceName = it.arguments?.getString("piece_name")
                     val detailScreenToggle: (String) -> Unit = { name ->
@@ -209,6 +214,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
+                // Ver obra en detalle desde la lista de favoritos
                 composable("detail_fav/{piece_name}") { backStackEntry ->
                     val pieceName = backStackEntry.arguments?.getString("piece_name")
 
@@ -232,6 +238,21 @@ fun ArtleryApp() {
                                 pieceName = pieceName,
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
+                            )
+                        }
+                    }
+                }
+            // Ver información sobre la aplicación
+                composable("about") {
+                    when (windowSize) {
+                        WindowWidthSizeClass.Compact -> {
+                            AboutScreen(
+                                Modifier.padding(8.dp)
+                            )
+                        }
+                        else -> {
+                            AboutScreen(
+                                Modifier.padding(8.dp)
                             )
                         }
                     }

@@ -26,5 +26,10 @@
     <string name="favorite_button">Botón favorito</string>
     <string name="no_favorites_message">No hay obras favoritas aún.</string>
     <string name="add_comment_desc">Añadir comentario</string>
-    <string name="comments_title">Título del comentario</string>
+    <string name="comments_title">Comentarios</string>
+    <string name="about_app_title">Sobre Artlery</string>
+    <string name="logo_desc">Logo de la aplicación\n</string>
+    <string name="email_subject">Asunto</string>
+    <string name="send_email_prompt">Información sobre la aplicación</string>
+    <string name="send_email_desc">Descripción de la imagen para enviar un email</string>
 </resources>

@@ -53,13 +53,13 @@ fun DetailFavScreen(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Lógica para abrir diálogo o pantalla de añadir comentario */ },
+                onClick = {},
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_comment_desc))
+                Icon(Icons.Filled.AddComment, contentDescription = stringResource(R.string.add_comment_desc))
             }
         },
-        // Usamos TopAppBar si queremos una barra de navegación superior con el botón de atrás
+
         topBar = {
             TopAppBar(
                 title = { Text(piece?.name ?: stringResource(R.string.piece_not_found)) },
@@ -72,7 +72,6 @@ fun DetailFavScreen(
         }
     ) { innerPadding ->
 
-        // LazyColumn para que todo el contenido sea desplazable
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -81,8 +80,7 @@ fun DetailFavScreen(
         ) {
 
             piece?.let { pieceData ->
-                // 1. Botón Fav (Toggle) - En la versión detalle ya no es estrictamente necesario,
-                // pero lo mantenemos si quieres la funcionalidad
+
                 item {
                     Row(
                         modifier = Modifier
@@ -100,7 +98,6 @@ fun DetailFavScreen(
                     }
                 }
 
-                // 2. Imagen y Atributos (el cuerpo de la pantalla anterior)
                 item {
                     // Imagen
                     ImageComp(
@@ -114,14 +111,13 @@ fun DetailFavScreen(
                     )
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    // Nombre (Si no se usa TopAppBar)
-                    StandardTextComp(
-                        text = pieceData.name,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
+                    // Título de la barra superior
+//                    StandardTextComp(
+//                        text = pieceData.name,
+//                        style = MaterialTheme.typography.headlineMedium
+//                    )
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    // Atributos y Descripción
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.Center,
