@@ -32,4 +32,10 @@
     <string name="email_subject">Asunto</string>
     <string name="send_email_prompt">Información sobre la aplicación</string>
     <string name="send_email_desc">Descripción de la imagen para enviar un email</string>
+    <string name="profile_title">Mi perfil</string>
+    <string name="email_label">Correo electrónico</string>
+    <string name="password_label">Contraseña</string>
+    <string name="login_prompt">Inicia sesión para personalizar tu experiencia</string>
+    <string name="welcome_user">Bienvenido, %s</string>
+    <string name="profile_image_desc">Imagen de perfil del usuario</string>
 </resources>
