@@ -136,28 +136,12 @@ fun PieceCardLand(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.Bottom
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     StandardTextComp(
                         text = piece.name,
                         style = MaterialTheme.typography.titleMedium
-                    )
-                    StandardTextComp(
-                        text = piece.author,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    StandardTextComp(
-                        text = piece.year,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    StandardTextComp(
-                        text = piece.style,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    StandardTextComp(
-                        text = piece.location,
-                        style = MaterialTheme.typography.bodyMedium
                     )
                     IconButton(
                         onClick = { onFavClick(piece) }
@@ -169,6 +153,29 @@ fun PieceCardLand(
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(5.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    StandardTextComp(
+                        text = piece.author,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    StandardTextComp(
+                        text = piece.year,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                StandardTextComp(
+                    text = piece.style,
+                    style = MaterialTheme.typography.bodySmall
+                )
+                StandardTextComp(
+                    text = piece.location,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     }
@@ -267,16 +274,14 @@ fun FavPieceCardLand(
         Row(
             modifier = Modifier.padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.Start
         ) {
-            // Imagen
             ImageComp(
                 modifier = Modifier,
                 drawable = Datasource.getDrawableIdByName(piece.photo),
                 height = 150,
                 width = 150
             )
-            // Atributos
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -284,41 +289,22 @@ fun FavPieceCardLand(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.Bottom
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     StandardTextComp(
                         text = piece.name,
                         style = MaterialTheme.typography.titleMedium
                     )
-                    StandardTextComp(
-                        text = piece.author,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    StandardTextComp(
-                        text = piece.year,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    StandardTextComp(
-                        text = piece.style,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    StandardTextComp(
-                        text = piece.location,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
                     IconButton(
                         onClick = {
-                            Log.d(
-                                "FavPieceCard",
-                                "Botón Favorito pulsado"
-                            )
+                            Log.d("FavPieceCardLand", "Botón Eliminar pulsado para ${piece.name}")
                             onRemoveFromFav(piece)
                         },
                         modifier = Modifier.size(50.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Clear, // O Delete
+                            imageVector = Icons.Filled.Clear,
                             modifier = Modifier.size(50.dp),
                             contentDescription = stringResource(R.string.delete_desc),
                             tint = MaterialTheme.colorScheme.error
@@ -326,6 +312,28 @@ fun FavPieceCardLand(
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    StandardTextComp(
+                        text = piece.author,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    StandardTextComp(
+                        text = piece.year,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                StandardTextComp(
+                    text = piece.style,
+                    style = MaterialTheme.typography.bodySmall
+                )
+                StandardTextComp(
+                    text = piece.location,
+                    style = MaterialTheme.typography.bodySmall
+                )
                 StandardTextComp(
                     text = stringResource(R.string.piece_description),
                     style = MaterialTheme.typography.bodyMedium,
@@ -335,7 +343,6 @@ fun FavPieceCardLand(
         }
     }
 }
-
 
 @Composable
 fun CommentCard(comment: com.example.artlery.ui.screens.Comment, modifier: Modifier = Modifier) {

@@ -1,10 +1,14 @@
 package com.example.artlery.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -76,24 +80,33 @@ fun FavListMedExpScreen(
 
         val favoritePieces = pieces.filter { it.isFav }
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-        ) {
-            items(favoritePieces) { piece ->
-                FavPieceCardLand(
-                    piece = piece,
-                    onRemoveFromFav = onRemoveFromFav,
-                    onClick = {
-                        navController.navigate("detail_fav/${piece.name}")
-                    }
-                )
+        if (favoritePieces.isEmpty()) {
+            StandardTextComp(
+                text = stringResource(R.string.no_favorites_message),
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 32.dp, horizontal = 16.dp),
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
+            ) {
+                items(favoritePieces) { piece ->
+                    FavPieceCardLand(
+                        piece = piece,
+                        onRemoveFromFav = onRemoveFromFav,
+                        onClick = {
+                            navController.navigate("detail_fav/${piece.name}")
+                        }
+                    )
+                }
             }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
