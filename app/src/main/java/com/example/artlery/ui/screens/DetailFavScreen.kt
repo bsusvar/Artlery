@@ -1,5 +1,7 @@
 package com.example.artlery.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -52,6 +54,7 @@ private val initialSampleComments = listOf(
 )
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailFavScreen(
@@ -189,7 +192,7 @@ fun DetailFavScreen(
                         )
                     }
                 }
-                items(comments) { comment ->
+                items(comments.reversed()) { comment ->
                     CommentCard(comment = comment)
                 }
 
@@ -249,6 +252,7 @@ fun DetailFavScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun DetailFavScreenPreview() {

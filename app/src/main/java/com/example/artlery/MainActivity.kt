@@ -2,10 +2,12 @@ package com.example.artlery
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -50,6 +52,7 @@ import com.example.artlery.utils.getWindowSizeClass
 import kotlinx.coroutines.flow.map
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -94,6 +97,7 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("ContextCastToActivity")
 @Composable
 fun ArtleryApp() {
@@ -110,6 +114,9 @@ fun ArtleryApp() {
     val currentRoute by navController.currentBackStackEntryFlow
         .map { it.destination.route }
         .collectAsState(initial = "")
+
+    val bottomNavRoutes = listOf("piece_list", "fav_list", "profile", "about")
+    val showBottomBar = isLogged || currentRoute in listOf("profile", "about")
 
     val onFavToggle: (Piece) -> Unit = { pieceToToggle ->
         pieceToToggle.isFav = !pieceToToggle.isFav
@@ -133,7 +140,9 @@ fun ArtleryApp() {
             modifier = Modifier.fillMaxSize(),
             topBar = {},
             bottomBar = {
-                BottomNavigationBar(navController, currentRoute)
+                if (showBottomBar) {
+                    BottomNavigationBar(navController, currentRoute)
+                }
             },
             floatingActionButton = {}
         ) { innerPadding ->
@@ -287,6 +296,7 @@ fun ArtleryApp() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun ArtleryAppPreview() {

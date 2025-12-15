@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -60,18 +61,14 @@ fun PieceDetailCompactScreen(
             )
         }
     ) { innerPadding ->
-
-        androidx.compose.material3.Surface(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
-            color = MaterialTheme.colorScheme.background
+                .padding(innerPadding), // Aplicamos el padding del Scaffold aquí
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                piece?.let { pieceData ->
+            piece?.let { pieceData ->
+                item {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -86,6 +83,9 @@ fun PieceDetailCompactScreen(
                             )
                         }
                     }
+                }
+
+                item {
                     // Imagen
                     ImageComp(
                         drawable = Datasource.getDrawableIdByName(pieceData.photo),
@@ -97,19 +97,15 @@ fun PieceDetailCompactScreen(
                             .fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    /* StandardTextComp(
-                        text = pieceData.name,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    */
+                }
 
+                item {
+                    // Atributos y descripción
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        // Atributos y Descripción
                         StandardTextComp(text = "${stringResource(R.string.author)}: ${pieceData.author}")
                         StandardTextComp(text = "${stringResource(R.string.year)}: ${pieceData.year}")
                         StandardTextComp(text = "${stringResource(R.string.style)}: ${pieceData.style}")
@@ -117,22 +113,20 @@ fun PieceDetailCompactScreen(
                         Spacer(modifier = Modifier.height(15.dp))
                         StandardTextComp(
                             text = pieceData.description,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(horizontal = 20.dp)
                         )
                     }
-                } ?: StandardTextComp(
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(35.dp))
+                }
+            } ?: item {
+                StandardTextComp(
                     text = stringResource(R.string.piece_not_found),
                     style = MaterialTheme.typography.headlineMedium
                 )
-
-                Spacer(modifier = Modifier.height(35.dp))
-
-                /*
-                StandardButtonComp(
-                    label = stringResource(R.string.back_button),
-                    onClick = { navController.popBackStack() }
-                )
-                */
             }
         }
     }
