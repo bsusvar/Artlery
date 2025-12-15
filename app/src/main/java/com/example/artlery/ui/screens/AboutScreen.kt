@@ -108,9 +108,6 @@ fun AboutContent(modifier: Modifier = Modifier) {
                 )
             }
         }
-
-        // Copyright/Pie de página (Opcional, si quieres que no se vea sobre la BottomBar)
-        // Ya no es necesario replicar la BottomBar aquí.
     }
 }
 

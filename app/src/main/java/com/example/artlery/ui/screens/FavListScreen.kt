@@ -40,7 +40,7 @@ fun FavListCompactScreen(
         if (favoritePieces.isEmpty()) {
             StandardTextComp(
                 text = stringResource(R.string.no_favorites_message),
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 32.dp),

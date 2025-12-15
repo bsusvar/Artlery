@@ -33,6 +33,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.ui.text.font.FontWeight
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,14 +107,34 @@ fun PieceDetailCompactScreen(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        StandardTextComp(text = "${stringResource(R.string.author)}: ${pieceData.author}")
-                        StandardTextComp(text = "${stringResource(R.string.year)}: ${pieceData.year}")
-                        StandardTextComp(text = "${stringResource(R.string.style)}: ${pieceData.style}")
-                        StandardTextComp(text = "${stringResource(R.string.location)}: ${pieceData.location}")
+                        StandardTextComp(
+                            text = "${stringResource(R.string.author)}: ${pieceData.author}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                        StandardTextComp(
+                            text = "${stringResource(R.string.year)}: ${pieceData.year}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                        StandardTextComp(
+                            text = "${stringResource(R.string.style)}: ${pieceData.style}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                        StandardTextComp(
+                            text = "${stringResource(R.string.location)}: ${pieceData.location}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
                         Spacer(modifier = Modifier.height(15.dp))
                         StandardTextComp(
                             text = pieceData.description,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(horizontal = 20.dp)
                         )
                     }
@@ -125,7 +146,7 @@ fun PieceDetailCompactScreen(
             } ?: item {
                 StandardTextComp(
                     text = stringResource(R.string.piece_not_found),
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineSmall
                 )
             }
         }

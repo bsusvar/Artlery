@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -171,14 +172,34 @@ fun DetailFavScreen(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        StandardTextComp(text = "${stringResource(R.string.author)}: ${pieceData.author}")
-                        StandardTextComp(text = "${stringResource(R.string.year)}: ${pieceData.year}")
-                        StandardTextComp(text = "${stringResource(R.string.style)}: ${pieceData.style}")
-                        StandardTextComp(text = "${stringResource(R.string.location)}: ${pieceData.location}")
+                        StandardTextComp(
+                            text = "${stringResource(R.string.author)}: ${pieceData.author}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                        StandardTextComp(
+                            text = "${stringResource(R.string.year)}: ${pieceData.year}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                        StandardTextComp(
+                            text = "${stringResource(R.string.style)}: ${pieceData.style}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                        StandardTextComp(
+                            text = "${stringResource(R.string.location)}: ${pieceData.location}",
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
                         Spacer(modifier = Modifier.height(15.dp))
                         StandardTextComp(
                             text = pieceData.description,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(horizontal = 20.dp)
                         )
                         Spacer(modifier = Modifier.height(30.dp))
@@ -203,7 +224,7 @@ fun DetailFavScreen(
             } ?: item {
                 StandardTextComp(
                     text = stringResource(R.string.piece_not_found),
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineSmall
                 )
             }
         }
@@ -216,7 +237,7 @@ fun DetailFavScreen(
                     Column {
                         StandardTextComp(
                             text = stringResource(R.string.commenting_as, userName),
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(Modifier.height(8.dp))
                         OutlinedTextField(
