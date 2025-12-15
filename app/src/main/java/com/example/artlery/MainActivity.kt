@@ -128,7 +128,7 @@ fun ArtleryApp() {
         .collectAsState(initial = "")
 
     val bottomNavRoutes = listOf("piece_list", "fav_list", "profile", "about")
-    val showBottomBar = isLogged || currentRoute in listOf("profile", "about")
+    val showBottomBar = isLogged
 
     val onFavToggle: (Piece) -> Unit = { pieceToToggle ->
         pieceToToggle.isFav = !pieceToToggle.isFav
@@ -217,7 +217,6 @@ fun ArtleryApp() {
                                 onLogin = onLogin,
                                 onLogout = onLogout,
                                 navController = navController,
-                                // Modifier.padding(8.dp)
                             )
                         }
                         else -> {

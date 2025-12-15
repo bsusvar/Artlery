@@ -59,7 +59,7 @@ fun ProfileCompactScreen(
     }
 
     Column(modifier = modifier.fillMaxSize()) {
-        MedHeaderComp(stringResource(R.string.profile_title)) // Define este recurso
+        MedHeaderComp(stringResource(R.string.profile_title))
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -2,7 +2,6 @@ package com.example.artlery.ui.screens
 
 import android.content.Intent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,11 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.artlery.R
@@ -62,12 +59,12 @@ fun AboutContent(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Logo
         Image(
-            painter = painterResource(id = R.drawable.artlery_logo2),
+            painter = painterResource(id = R.drawable.a_icono),
             contentDescription = stringResource(R.string.logo_desc),
             modifier = Modifier.size(100.dp).padding(top = 16.dp)
         )
@@ -77,7 +74,7 @@ fun AboutContent(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(top = 20.dp, bottom = 20.dp),
             text = appDescription.trimIndent(),
-            style = MaterialTheme.typography.bodyLarge, //
+            style = MaterialTheme.typography.bodyLarge,
         )
 
         val emailRecipient = "contacto@artleryapp.com"
@@ -103,7 +100,7 @@ fun AboutContent(modifier: Modifier = Modifier) {
                 )
                 Text(
                     text = emailRecipient,
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
             }

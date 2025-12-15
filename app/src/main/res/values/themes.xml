@@ -2,5 +2,14 @@
 <resources>
 
     <style name="Theme.ArtleryCompose" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenAnimatedIcon">@drawable/a_icono</item>
+
+        <item name="windowSplashScreenBackground">@color/white</item>
+
+        <item name="postSplashScreenTheme">@style/Theme.ArtleryCompose</item>
+
+    </style>
 
 </resources>

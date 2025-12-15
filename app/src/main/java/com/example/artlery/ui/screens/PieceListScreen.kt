@@ -20,7 +20,6 @@ import com.example.artlery.ui.components.MedHeaderComp
 import com.example.artlery.ui.components.PieceCard
 import com.example.artlery.ui.components.PieceCardLand
 
-// Incluir botón para favs
 @Composable
 fun PieceListCompactScreen(
     pieces: MutableList<Piece>,
@@ -36,9 +35,6 @@ fun PieceListCompactScreen(
                 .padding(8.dp)
         ) {
             items(pieces) { piece ->
-//                val onFavToggle: (Piece) -> Unit = { p ->
-//                    p.isFav = !p.isFav
-//                }
                 PieceCard(
                     piece = piece,
                     onCardClick = {

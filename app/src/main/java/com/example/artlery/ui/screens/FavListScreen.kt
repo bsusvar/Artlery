@@ -24,8 +24,6 @@ import com.example.artlery.ui.components.FavPieceCardLand
 import com.example.artlery.ui.components.StandardTextComp
 
 
-// Pantalla con la lista de elementos que han sido marcados como favoritos. En esta pantalla debe haber un botón para eliminar de favoritos.
-
 @Composable
 fun FavListCompactScreen(
     pieces: MutableList<Piece>,

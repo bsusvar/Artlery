@@ -159,14 +159,6 @@ fun DetailFavScreen(
                             .fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-
-                    // Título de la barra superior
-//                    StandardTextComp(
-//                        text = pieceData.name,
-//                        style = MaterialTheme.typography.headlineMedium
-//                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.Center,
@@ -224,7 +216,7 @@ fun DetailFavScreen(
             } ?: item {
                 StandardTextComp(
                     text = stringResource(R.string.piece_not_found),
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }

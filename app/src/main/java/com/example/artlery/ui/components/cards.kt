@@ -45,7 +45,7 @@ fun PieceCard(
         Row(
             modifier = Modifier.padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween // Si no, SpaceAround
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             // Imagen
             ImageComp(
@@ -86,13 +86,7 @@ fun PieceCard(
                     text = piece.location,
                     style = MaterialTheme.typography.bodyMedium // Añadir fonts
                 )
-//                // Descripción
-//                StandardTextComp(
-//                    text = piece.description,
-//                    style = MaterialTheme.typography.bodyMedium // Añadir fonts
-//                )
             }
-            // Botón de acción con icono para acciones futuras
             IconButton(
                 onClick = { onFavClick(piece) },
             )
@@ -198,8 +192,7 @@ fun FavPieceCard(
                 .fillMaxWidth()
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween // Para texto a la izquierda y botón a la derecha
-            //  horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -253,77 +246,6 @@ fun FavPieceCard(
                     tint = MaterialTheme.colorScheme.error
                 )
             }
-//            // Imagen
-//            ImageComp(
-//                modifier = Modifier,
-//                drawable = Datasource.getDrawableIdByName(piece.photo),
-//                height = 100,
-//                width = 100
-//            )
-//            // Atributos
-//            Column(
-//                modifier = Modifier
-//                    .weight(1f)
-//                    .padding(start = 20.dp)
-//            ) {
-//                StandardTextComp(
-//                    text = piece.name,
-//                    style = MaterialTheme.typography.titleMedium
-//                )
-//                Spacer(modifier = Modifier.height(5.dp))
-//                StandardTextComp(
-//                    text = piece.author,
-//                    style = MaterialTheme.typography.bodyMedium
-//                )
-//                // Quizás a partir de aquí sobre
-//                StandardTextComp(
-//                    text = piece.year,
-//                    style = MaterialTheme.typography.bodyMedium
-//                )
-//                StandardTextComp(
-//                    text = piece.style,
-//                    style = MaterialTheme.typography.bodyMedium
-//                )
-//                StandardTextComp(
-//                    text = piece.location,
-//                    style = MaterialTheme.typography.bodyMedium
-//                )
-//                Column(verticalArrangement = Arrangement.SpaceAround) {
-//                    // Botón de acción con icono
-//                    IconButton(
-//                        onClick = {
-//                            Log.d(
-//                                "FavPieceCard",
-//                                "Botón Eliminar pulsado"
-//                            )
-//                        },
-//                        modifier = Modifier.size(50.dp)
-//                    ) {
-//                        Icon(
-//                            imageVector = Icons.Default.Clear,
-//                            modifier = Modifier.size(50.dp),
-//                            contentDescription = stringResource(R.string.delete_desc),
-//                            tint = MaterialTheme.colorScheme.error
-//                        )
-//                    }
-//                    IconButton(
-//                        onClick = {
-//                            Log.d(
-//                                "FavPieceCard",
-//                                "Botón Más pulsado"
-//                            )
-//                        },
-//                        modifier = Modifier.size(50.dp)
-//                    ) {
-//                        Icon(
-//                            imageVector = Icons.TwoTone.KeyboardArrowDown,
-//                            modifier = Modifier.size(50.dp),
-//                            contentDescription = stringResource(R.string.more_content_desc),
-//                            tint = MaterialTheme.colorScheme.primary
-//                        )
-//                    }
-//                }
-//            }
         }
     }
 }

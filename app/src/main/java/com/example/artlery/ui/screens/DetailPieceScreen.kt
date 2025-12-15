@@ -65,7 +65,7 @@ fun PieceDetailCompactScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding), // Aplicamos el padding del Scaffold aquí
+                .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             piece?.let { pieceData ->
