@@ -34,6 +34,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontWeight
+import com.example.artlery.model.Piece
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,9 +43,10 @@ fun PieceDetailCompactScreen(
     pieceName: String?,
     navController: NavController,
     onFavToggle: (String) -> Unit,
+    pieces: MutableList<Piece>,
     modifier: Modifier = Modifier
 ) {
-    val piece = if (pieceName != null) Datasource.getPieceByName(pieceName) else null
+    val piece = pieces.find { it.name == pieceName }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),

@@ -244,6 +244,7 @@ fun ArtleryApp() {
                                 pieceName = pieceName,
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
+                                pieces = pieces,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
@@ -253,6 +254,7 @@ fun ArtleryApp() {
                                 pieceName,
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
+                                pieces = pieces,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
@@ -273,6 +275,7 @@ fun ArtleryApp() {
                                 pieceName = pieceName,
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
+                                pieces = pieces,
                                 userName = userName,
                             )
                         }
@@ -282,6 +285,7 @@ fun ArtleryApp() {
                                 pieceName = pieceName,
                                 navController = navController,
                                 onFavToggle = detailScreenToggle,
+                                pieces = pieces,
                                 userName = userName,
                             )
                         }

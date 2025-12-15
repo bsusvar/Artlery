@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.artlery.R
 import com.example.artlery.model.Datasource
+import com.example.artlery.model.Piece
 import com.example.artlery.ui.components.ImageComp
 import com.example.artlery.ui.components.StandardTextComp
 import com.example.artlery.ui.components.CommentCard
@@ -62,10 +63,11 @@ fun DetailFavScreen(
     pieceName: String?,
     navController: NavController,
     onFavToggle: (String) -> Unit,
+    pieces: MutableList<Piece>,
     userName: String,
     modifier: Modifier = Modifier
 ) {
-    val piece = if (pieceName != null) Datasource.getPieceByName(pieceName) else null
+    val piece = pieces.find { it.name == pieceName }
     var comments by remember { mutableStateOf(initialSampleComments) }
 
     var showCommentDialog by remember { mutableStateOf(false) }
@@ -260,23 +262,5 @@ fun DetailFavScreen(
                 }
             )
         }
-
-
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview
-@Composable
-fun DetailFavScreenPreview() {
-    val emptyToggle: (String) -> Unit = {}
-
-    Datasource.getPieceByName("La Anunciación")?.isFav = true
-
-    DetailFavScreen(
-        pieceName = "La Anunciación",
-        navController = NavController(LocalContext.current),
-        onFavToggle = emptyToggle,
-        userName = "Visitante"
-    )
 }
