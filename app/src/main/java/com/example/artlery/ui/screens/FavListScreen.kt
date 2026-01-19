@@ -1,33 +1,36 @@
 package com.example.artlery.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.artlery.model.Piece
-import com.example.artlery.ui.components.MedHeaderComp
 import com.example.artlery.R
 import com.example.artlery.model.Datasource
+import com.example.artlery.model.Piece
 import com.example.artlery.ui.components.FavPieceCard
 import com.example.artlery.ui.components.FavPieceCardLand
+import com.example.artlery.ui.components.MedHeaderComp
 import com.example.artlery.ui.components.StandardTextComp
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavListCompactScreen(
     pieces: MutableList<Piece>,
@@ -35,9 +38,35 @@ fun FavListCompactScreen(
     onRemoveFromFav: (Piece) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    var showDialog by remember { mutableStateOf(false) }
+    var pieceToDelete by remember { mutableStateOf<Piece?>(null) }
+
     Column(modifier = modifier.fillMaxSize()) {
         MedHeaderComp(stringResource(R.string.artlery_fav_list))
+
         val favoritePieces = pieces.filter { it.isFav }
+
+        if (showDialog && pieceToDelete != null) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                title = { StandardTextComp(text = "Eliminar favorito") },
+                text = { StandardTextComp(text = "¿Deseas eliminar este favorito?") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        pieceToDelete?.let { onRemoveFromFav(it) }
+                        showDialog = false
+                    }) {
+                        StandardTextComp(text = "Eliminar")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog = false }) {
+                        StandardTextComp(text = "Cancelar")
+                    }
+                }
+            )
+        }
 
         if (favoritePieces.isEmpty()) {
             StandardTextComp(
@@ -59,7 +88,10 @@ fun FavListCompactScreen(
                         onCardClick = {
                             navController.navigate("detail_fav/${piece.name}")
                         },
-                        onRemoveFromFav = onRemoveFromFav
+                        onRemoveFromFav = {
+                            pieceToDelete = piece
+                            showDialog = true
+                        }
                     )
                 }
             }
