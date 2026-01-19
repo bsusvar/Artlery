@@ -44,4 +44,10 @@
     <string name="send_button">Enviar</string>
     <string name="cancel_button">Cancelar</string>
     <string name="app_logo_desc">Logo app</string>
+    <string name="remove_fav_title">Eliminar favorito</string>
+    <string name="remove_fav_text">¿Deseas eliminar este favorito?</string>
+    <string name="remove_fav_cancel">Cancelar</string>
+    <string name="remove_fav_confirm">Eliminar</string>
+
+
 </resources>

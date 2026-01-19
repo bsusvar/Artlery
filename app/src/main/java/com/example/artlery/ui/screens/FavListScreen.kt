@@ -40,29 +40,29 @@ fun FavListCompactScreen(
 ) {
 
     var showDialog by remember { mutableStateOf(false) }
-    var pieceToDelete by remember { mutableStateOf<Piece?>(null) }
+    var pieceToUnfav by remember { mutableStateOf<Piece?>(null) }
 
     Column(modifier = modifier.fillMaxSize()) {
         MedHeaderComp(stringResource(R.string.artlery_fav_list))
 
         val favoritePieces = pieces.filter { it.isFav }
 
-        if (showDialog && pieceToDelete != null) {
+        if (showDialog && pieceToUnfav != null) {
             AlertDialog(
                 onDismissRequest = { showDialog = false },
-                title = { StandardTextComp(text = "Eliminar favorito") },
-                text = { StandardTextComp(text = "¿Deseas eliminar este favorito?") },
+                title = { StandardTextComp(text = stringResource(R.string.remove_fav_title)) },
+                text = { StandardTextComp(text = stringResource(R.string.remove_fav_text)) },
                 confirmButton = {
                     TextButton(onClick = {
-                        pieceToDelete?.let { onRemoveFromFav(it) }
+                        pieceToUnfav?.let { onRemoveFromFav(it) }
                         showDialog = false
                     }) {
-                        StandardTextComp(text = "Eliminar")
+                        StandardTextComp(text = stringResource(R.string.remove_fav_confirm))
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { showDialog = false }) {
-                        StandardTextComp(text = "Cancelar")
+                        StandardTextComp(text = stringResource(R.string.remove_fav_cancel))
                     }
                 }
             )
@@ -89,7 +89,7 @@ fun FavListCompactScreen(
                             navController.navigate("detail_fav/${piece.name}")
                         },
                         onRemoveFromFav = {
-                            pieceToDelete = piece
+                            pieceToUnfav = piece
                             showDialog = true
                         }
                     )
@@ -106,11 +106,36 @@ fun FavListMedExpScreen(
     onRemoveFromFav: (Piece) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    var showDialog by remember { mutableStateOf(false) }
+    var pieceToUnfav by remember { mutableStateOf<Piece?>(null) }
+
     Column(modifier = modifier.fillMaxSize()) {
 
         MedHeaderComp(stringResource(R.string.artlery_fav_list))
 
         val favoritePieces = pieces.filter { it.isFav }
+
+        if (showDialog && pieceToUnfav != null) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                title = { StandardTextComp(text = stringResource(R.string.remove_fav_title)) },
+                text = { StandardTextComp(text = stringResource(R.string.remove_fav_text)) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        pieceToUnfav?.let { onRemoveFromFav(it) }
+                        showDialog = false
+                    }) {
+                        StandardTextComp(text = stringResource(R.string.remove_fav_confirm))
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog = false }) {
+                        StandardTextComp(text = stringResource(R.string.remove_fav_cancel))
+                    }
+                }
+            )
+        }
 
         if (favoritePieces.isEmpty()) {
             StandardTextComp(
@@ -129,9 +154,12 @@ fun FavListMedExpScreen(
                 items(favoritePieces) { piece ->
                     FavPieceCardLand(
                         piece = piece,
-                        onRemoveFromFav = onRemoveFromFav,
                         onClick = {
                             navController.navigate("detail_fav/${piece.name}")
+                        },
+                        onRemoveFromFav = {
+                            pieceToUnfav = piece
+                            showDialog = true
                         }
                     )
                 }
