@@ -15,4 +15,9 @@ data class Piece(
     var isFavInitial: Boolean = false
 ) {
     var isFav by mutableStateOf(isFavInitial)
+
+    fun containsText(query: String): Boolean {
+        val fullData = "$name $author $year $style $location $description"
+        return fullData.contains(query, ignoreCase = true)
+    }
 }

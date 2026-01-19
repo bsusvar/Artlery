@@ -25,6 +25,7 @@ import com.example.artlery.model.Piece
 import com.example.artlery.ui.components.MedHeaderComp
 import com.example.artlery.ui.components.PieceCard
 import com.example.artlery.ui.components.PieceCardLand
+import com.example.artlery.ui.components.StandardInputTextComp
 import com.example.artlery.ui.components.StandardTextComp
 
 @Composable
@@ -34,11 +35,22 @@ fun PieceListCompactScreen(
     onFavToggle: (Piece) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var searchQuery by remember { mutableStateOf("") }
+
     var showDialog by remember { mutableStateOf(false) }
     var pieceToUnfav by remember { mutableStateOf<Piece?>(null) }
 
+    val filteredPieces = pieces.filter { it.containsText(searchQuery) }
+
     Column(modifier = modifier.fillMaxSize()) {
         MedHeaderComp(title = stringResource(id = R.string.piece_list))
+
+        StandardInputTextComp(
+            label = stringResource(R.string.search_label),
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            modifier = Modifier.padding(16.dp)
+        )
 
         if (showDialog && pieceToUnfav != null) {
             AlertDialog(
@@ -66,7 +78,7 @@ fun PieceListCompactScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            items(pieces) { piece ->
+            items(filteredPieces) { piece ->
                 PieceCard(
                     piece = piece,
                     onCardClick = {
@@ -93,13 +105,23 @@ fun PieceListMedExpScreen(
     onFavToggle: (Piece) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var searchQuery by remember { mutableStateOf("") }
 
     var showDialog by remember { mutableStateOf(false) }
     var pieceToUnfav by remember { mutableStateOf<Piece?>(null) }
 
+    val filteredPieces = pieces.filter { it.containsText(searchQuery) }
+
     Column(modifier = modifier.fillMaxSize()) {
 
         MedHeaderComp(title = stringResource(id = R.string.piece_list))
+
+        StandardInputTextComp(
+            label = stringResource(R.string.search_label),
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            modifier = Modifier.padding(16.dp)
+        )
 
         if (showDialog && pieceToUnfav != null) {
             AlertDialog(
@@ -127,7 +149,7 @@ fun PieceListMedExpScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            items(pieces) { piece ->
+            items(filteredPieces) { piece ->
                 PieceCardLand(
                     piece = piece,
                     onClick = {

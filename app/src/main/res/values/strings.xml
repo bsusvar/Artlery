@@ -48,6 +48,7 @@
     <string name="remove_fav_text">¿Deseas eliminar este favorito?</string>
     <string name="remove_fav_cancel">Cancelar</string>
     <string name="remove_fav_confirm">Eliminar</string>
+    <string name="search_label">Buscar por título, autor, año...</string>
 
 
 </resources>
