@@ -49,11 +49,13 @@ fun AboutContent(modifier: Modifier = Modifier) {
     val version = try {
         context.packageManager.getPackageInfo(context.packageName, 0).versionName
     } catch (e: Exception) {
-        "1.0"
+        "1.1"
     }
 
-    val description = stringResource(id = R.string.descripcionApp)
+    val description = stringResource(id = R.string.app_description)
     val appDescription = String.format(description, version)
+    val emailSubject = stringResource(R.string.email_subject)
+    val sendEmailPrompt = stringResource(R.string.send_email_prompt)
 
 
     Column(
@@ -66,7 +68,9 @@ fun AboutContent(modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(id = R.drawable.a_icono),
             contentDescription = stringResource(R.string.logo_desc),
-            modifier = Modifier.size(100.dp).padding(top = 16.dp)
+            modifier = Modifier
+                .size(100.dp)
+                .padding(top = 16.dp)
         )
 
         StandardTextComp(
@@ -84,10 +88,15 @@ fun AboutContent(modifier: Modifier = Modifier) {
                     val intent = Intent(Intent.ACTION_SEND).apply {
                         type = "message/rfc822"
                         putExtra(Intent.EXTRA_EMAIL, arrayOf(emailRecipient))
-                        putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.email_subject))
+                        putExtra(Intent.EXTRA_SUBJECT, emailSubject)
                         putExtra(Intent.EXTRA_TEXT, appDescription.trimIndent())
                     }
-                    context.startActivity(Intent.createChooser(intent, context.getString(R.string.send_email_prompt)))
+                    context.startActivity(
+                        Intent.createChooser(
+                            intent,
+                            sendEmailPrompt
+                        )
+                    )
                 }
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

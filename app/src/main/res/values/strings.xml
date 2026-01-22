@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Artlery</string>
-    <string name="descripcionApp">
+    <string name="app_description">
         Artlery es la primera red social dedicada a las artes plásticas.\n
         Aprende más sobre tus obras favoritas, colabora en la difusión del conocimiento y construye comunidad.\n
         Un oasis cultural por y para amantes de lo creativo.\n
@@ -40,7 +40,7 @@
     <string name="profile_image_desc">Imagen de perfil del usuario</string>
     <string name="add_comment_title">Añadir comentario</string>
     <string name="commenting_as">Comentando como: %s</string>
-    <string name="comment_input_label">Tu comentario...</string>
+    <string name="comment_input_label">Tu comentario…</string>
     <string name="send_button">Enviar</string>
     <string name="cancel_button">Cancelar</string>
     <string name="app_logo_desc">Logo app</string>
@@ -48,7 +48,11 @@
     <string name="remove_fav_text">¿Deseas eliminar este favorito?</string>
     <string name="remove_fav_cancel">Cancelar</string>
     <string name="remove_fav_confirm">Eliminar</string>
-    <string name="search_label">Buscar por título, autor, año...</string>
+    <string name="menu_artworks_list">Obras</string>
+    <string name="menu_favorites_list">Favoritos</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="search_label">Buscar por título, autor, año…</string>
 
 
 </resources>

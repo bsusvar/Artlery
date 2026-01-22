@@ -9,6 +9,7 @@ object Datasource {
     val pieceList: () -> List<Piece> = {
         mutableStateListOf(
             Piece(
+
                 "La Anunciación",
                 "anunciacion",
                 "Fra Angelico",

@@ -33,6 +33,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -82,10 +83,10 @@ class MainActivity : ComponentActivity() {
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
     NavigationBar {
         val items = listOf(
-            BottomNavItem("piece_list", Icons.AutoMirrored.Filled.List, "Obras"),
-            BottomNavItem("fav_list", Icons.Default.Favorite, "Favoritos"),
-            BottomNavItem("profile", Icons.Default.Person, "Perfil"),
-            BottomNavItem("about", Icons.Default.QuestionMark, "Acerca de")
+            BottomNavItem("piece_list", Icons.AutoMirrored.Filled.List, stringResource(R.string.menu_artworks_list)),
+            BottomNavItem("fav_list", Icons.Default.Favorite, stringResource(R.string.menu_favorites_list)),
+            BottomNavItem("profile", Icons.Default.Person, stringResource(R.string.menu_profile)),
+            BottomNavItem("about", Icons.Default.QuestionMark, stringResource(R.string.menu_about))
         )
         items.forEach { item ->
             NavigationBarItem(
