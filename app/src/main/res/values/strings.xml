@@ -36,7 +36,7 @@
     <string name="email_label">Correo electrónico</string>
     <string name="password_label">Contraseña</string>
     <string name="login_prompt">Inicia sesión para personalizar tu experiencia</string>
-    <string name="welcome_user">Bienvenido, %s</string>
+    <string name="welcome_user">Bienvenido/a, %s</string>
     <string name="profile_image_desc">Imagen de perfil del usuario</string>
     <string name="add_comment_title">Añadir comentario</string>
     <string name="commenting_as">Comentando como: %s</string>
