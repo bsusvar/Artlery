@@ -20,7 +20,7 @@ La aplicación, desarrollada en Android Studio con Kotlin y Jetpack Compose, com
 ## Diagrama de casos de uso
 
 <p align="center">
-  <img src="images/diagrama_artlery.jpg" alt="Diagrama de casos de uso de Artlery" width="700">
+  <img src="app/src/main/images/diagrama_artlery.jpg" alt="Diagrama de casos de uso de Artlery" width="700">
 </p>
 
 - **Precondiciones**: el acceso a las funcionalidades de listados, favoritos, perfil o información sobre la aplicación requiere que el usuario haya iniciado sesión de manera previa.
