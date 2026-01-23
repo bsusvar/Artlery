@@ -56,6 +56,7 @@
     <string name="timestamp_two_days">Hace 2 días</string>
     <string name="timestamp_one_day">Hace 1 día</string>
     <string name="timestamp_five_hours">Hace 5 horas</string>
+    <string name="timestamp_today">Hoy</string>
 
 
 </resources>

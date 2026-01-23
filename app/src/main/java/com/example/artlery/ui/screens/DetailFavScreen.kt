@@ -78,6 +78,7 @@ fun DetailFavScreen(
     val commentTwoDays = stringResource(R.string.timestamp_two_days)
     val commentOneDay = stringResource(R.string.timestamp_one_day)
     val commentFiveHours = stringResource(R.string.timestamp_five_hours)
+    val commentToday = stringResource(R.string.timestamp_today)
 
     val initialComments = remember {
         listOf(
@@ -143,7 +144,7 @@ fun DetailFavScreen(
                 id = comments.size + 1,
                 author = userName,
                 text = newCommentText,
-                timestamp = "Hoy, $time"
+                timestamp = "$commentToday, $time"
             )
             comments = comments + newComment
 

@@ -57,6 +57,7 @@
     <string name="timestamp_two_days">2 days ago</string>
     <string name="timestamp_one_day">1 day ago</string>
     <string name="timestamp_five_hours">5 hours ago</string>
+    <string name="timestamp_today">Today</string>
 
 
 </resources>
