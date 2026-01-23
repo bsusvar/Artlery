@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
@@ -43,14 +44,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.artlery.model.Datasource
 import com.example.artlery.model.Piece
+import com.example.artlery.ui.screens.AboutScreen
+import com.example.artlery.ui.screens.DetailFavScreen
 import com.example.artlery.ui.screens.FavListCompactScreen
 import com.example.artlery.ui.screens.FavListMedExpScreen
 import com.example.artlery.ui.screens.PieceDetailCompactScreen
 import com.example.artlery.ui.screens.PieceListCompactScreen
 import com.example.artlery.ui.screens.PieceListMedExpScreen
 import com.example.artlery.ui.screens.ProfileCompactScreen
-import com.example.artlery.ui.screens.DetailFavScreen
-import com.example.artlery.ui.screens.AboutScreen
 import com.example.artlery.ui.theme.ArtleryComposeTheme
 import com.example.artlery.utils.getWindowSizeClass
 import kotlinx.coroutines.flow.map
@@ -83,8 +84,16 @@ class MainActivity : ComponentActivity() {
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
     NavigationBar {
         val items = listOf(
-            BottomNavItem("piece_list", Icons.AutoMirrored.Filled.List, stringResource(R.string.menu_artworks_list)),
-            BottomNavItem("fav_list", Icons.Default.Favorite, stringResource(R.string.menu_favorites_list)),
+            BottomNavItem(
+                "piece_list",
+                Icons.AutoMirrored.Filled.List,
+                stringResource(R.string.menu_artworks_list)
+            ),
+            BottomNavItem(
+                "fav_list",
+                Icons.Default.Favorite,
+                stringResource(R.string.menu_favorites_list)
+            ),
             BottomNavItem("profile", Icons.Default.Person, stringResource(R.string.menu_profile)),
             BottomNavItem("about", Icons.Default.QuestionMark, stringResource(R.string.menu_about))
         )
@@ -118,8 +127,8 @@ fun ArtleryApp() {
         Datasource.getListXTimes(5).toMutableStateList()
     }
 
-    var userName by remember { mutableStateOf("Visitante") }
-    var isLogged by remember { mutableStateOf(false) }
+    var userName by rememberSaveable { mutableStateOf("Visitante") }
+    var isLogged by rememberSaveable { mutableStateOf(false) }
 
     val windowSize =
         getWindowSizeClass(LocalContext.current as Activity)
@@ -208,7 +217,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
-               // Perfil de usuario
+                // Perfil de usuario
                 composable("profile") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
@@ -220,6 +229,7 @@ fun ArtleryApp() {
                                 navController = navController,
                             )
                         }
+
                         else -> {
                             ProfileCompactScreen(
                                 isLogged = isLogged,
@@ -232,7 +242,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
-               // Ver obra en detalle desde la lista de obras
+                // Ver obra en detalle desde la lista de obras
                 composable("piece_detail/{piece_name}") { it ->
                     val pieceName = it.arguments?.getString("piece_name")
                     val detailScreenToggle: (String) -> Unit = { name ->
@@ -292,7 +302,7 @@ fun ArtleryApp() {
                         }
                     }
                 }
-            // Ver información sobre la aplicación
+                // Ver información sobre la aplicación
                 composable("about") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
@@ -300,6 +310,7 @@ fun ArtleryApp() {
                                 Modifier.padding(8.dp)
                             )
                         }
+
                         else -> {
                             AboutScreen(
                                 Modifier.padding(8.dp)

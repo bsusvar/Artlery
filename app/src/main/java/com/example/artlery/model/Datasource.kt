@@ -43,7 +43,7 @@ object Datasource {
                 "1901",
                 "Periodo azul",
                 "The Phillips Collection (Estados Unidos)",
-                "Obra dominada por los tonos azules característicos de la etapa del artista. Muestra a una mujer desnuda inclinada en la bañera, rodeada por elementos homenaje a obras de otros pintores,"
+                "Obra dominada por los tonos azules característicos de la etapa del artista. Muestra a una mujer desnuda inclinada en la bañera, rodeada por elementos homenaje a obras de otros pintores."
             ),
             Piece(
                 "Paseo a orillas del mar",

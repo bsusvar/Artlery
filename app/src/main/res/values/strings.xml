@@ -53,6 +53,9 @@
     <string name="menu_profile">Perfil</string>
     <string name="menu_about">Acerca de</string>
     <string name="search_label">Buscar por título, autor, año…</string>
+    <string name="timestamp_two_days">Hace 2 días</string>
+    <string name="timestamp_one_day">Hace 1 día</string>
+    <string name="timestamp_five_hours">Hace 5 horas</string>
 
 
 </resources>

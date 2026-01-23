@@ -62,18 +62,6 @@ data class Comment(
     val timestamp: String
 )
 
-private val initialSampleComments = listOf(
-    Comment(1, "Ana Pérez.", "¡Me encanta la luz y la composición!", "hace 2 días"),
-    Comment(
-        2,
-        "Luis G.",
-        "Muy interesante, la descripción me ayudó a entender el contexto.",
-        "hace 1 día"
-    ),
-    Comment(3, "Laura P.", "Una de mis piezas favoritas de este período.", "hace 5 horas")
-)
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,8 +74,38 @@ fun DetailFavScreen(
     modifier: Modifier = Modifier
 ) {
     val piece = pieces.find { it.name == pieceName }
+
+    val commentTwoDays = stringResource(R.string.timestamp_two_days)
+    val commentOneDay = stringResource(R.string.timestamp_one_day)
+    val commentFiveHours = stringResource(R.string.timestamp_five_hours)
+
+    val initialComments = remember {
+        listOf(
+            Comment(
+                1,
+                "Ana Pérez.",
+                "¡Me encanta la luz y la composición!",
+                commentTwoDays
+            ),
+
+            Comment(
+                2,
+                "Luis G.",
+                "Muy interesante, la descripción me ayudó a entender el contexto.",
+                commentOneDay
+            ),
+            Comment(
+                3,
+                "Laura P.",
+                "Una de mis piezas favoritas de este período.",
+                commentFiveHours
+            )
+        )
+    }
+
+
     var showDialog by remember { mutableStateOf(false) }
-    var comments by remember { mutableStateOf(initialSampleComments) }
+    var comments by remember { mutableStateOf(initialComments) }
 
     var showCommentDialog by remember { mutableStateOf(false) }
     var newCommentText by remember { mutableStateOf("") }

@@ -334,11 +334,6 @@ fun FavPieceCardLand(
                     text = piece.location,
                     style = MaterialTheme.typography.bodySmall
                 )
-                StandardTextComp(
-                    text = stringResource(R.string.piece_description),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(bottom = 10.dp)
-                )
             }
         }
     }
