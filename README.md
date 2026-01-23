@@ -15,7 +15,7 @@ La aplicación, desarrollada en Android Studio con Kotlin y Jetpack Compose, com
 - **Publicación de comentarios** sobre la obra desde la sección de favoritos.
 - Gestión de la **sesión del usuario**.
 - Detalles sobre el **propósito de la aplicación**.
-- **Adaptación de la interfaz** según **idioma** (español/inglés) y **dispositivo** (móvil/tablet).
+- **Adaptación de la interfaz** según **idioma** (español/inglés), **tema** (claro/oscuro), **tipo de dispositivo** (móvil/tablet) y **orientación** (vertical/horizontal).
 
 ## Diagrama de casos de uso
 
