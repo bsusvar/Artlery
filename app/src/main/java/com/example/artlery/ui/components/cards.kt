@@ -47,44 +47,37 @@ fun PieceCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Imagen
             ImageComp(
                 modifier = Modifier,
-                drawable = Datasource.getDrawableIdByName(piece.photo),
+                photoUrl = piece.photo,
                 height = 100,
                 width = 100
             )
-            // Atributos
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 20.dp)
             ) {
-                // Nombre
                 StandardTextComp(
                     text = piece.name,
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
-                // Autor
                 StandardTextComp(
                     text = piece.author,
-                    style = MaterialTheme.typography.bodyMedium // Añadir fonts
+                    style = MaterialTheme.typography.bodyMedium
                 )
-                // Año
                 StandardTextComp(
                     text = piece.year,
-                    style = MaterialTheme.typography.bodyMedium // Añadir fonts
+                    style = MaterialTheme.typography.bodyMedium
                 )
-                // Estilo
                 StandardTextComp(
                     text = piece.style,
-                    style = MaterialTheme.typography.bodyMedium // Añadir fonts
+                    style = MaterialTheme.typography.bodyMedium
                 )
-                // Localización
                 StandardTextComp(
                     text = piece.location,
-                    style = MaterialTheme.typography.bodyMedium // Añadir fonts
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
             IconButton(
@@ -121,14 +114,12 @@ fun PieceCardLand(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            // Imagen
             ImageComp(
                 modifier = Modifier,
-                drawable = Datasource.getDrawableIdByName(piece.photo),
+                photoUrl = piece.photo,
                 height = 100,
                 width = 100
             )
-            // Atributos
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -205,9 +196,8 @@ fun FavPieceCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.weight(1f)
             ) {
-                // Imagen
                 ImageComp(
-                    drawable = Datasource.getDrawableIdByName(piece.photo),
+                    photoUrl = piece.photo,
                     height = 100,
                     width = 100
                 )
@@ -278,7 +268,7 @@ fun FavPieceCardLand(
         ) {
             ImageComp(
                 modifier = Modifier,
-                drawable = Datasource.getDrawableIdByName(piece.photo),
+                photoUrl = piece.photo,
                 height = 150,
                 width = 150
             )

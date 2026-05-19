@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.artlery.R
 
 
@@ -60,31 +61,37 @@ fun StandardInputTextComp(
 @Composable
 fun ImageComp(
     modifier: Modifier = Modifier,
+    photoUrl: String? = null,
     contentScale: ContentScale = ContentScale.Fit,
-    drawable: Int,
+    drawable: Int? = null,
     contentDesc: String = "",
     height: Int = 0,
     width: Int = 0
 ) {
-    val contentDescription =
-        if (contentDesc == "")
-            stringResource(id = R.string.default_content_descrip)
-        else
-            contentDesc
-    if (height != 0 && width != 0) {
-        Image(
-            painter = painterResource(id = drawable),
+    val contentDescription = contentDesc.ifEmpty {
+        stringResource(id = R.string.default_content_descrip)
+    }
+
+    val finalModifier = if (height != 0 && width != 0) {
+        modifier
+            .height(height.dp)
+            .width(width.dp)
+    } else {
+        modifier
+    }
+
+    if (!photoUrl.isNullOrBlank()) {
+        AsyncImage(
+            model = photoUrl,
             contentDescription = contentDescription,
-            modifier
-                .height(height.dp)
-                .width(width.dp),
+            modifier = finalModifier,
             contentScale = contentScale
         )
-    } else {
+    } else if (drawable != null) {
         Image(
-            modifier = modifier,
             painter = painterResource(id = drawable),
             contentDescription = contentDescription,
+            modifier = finalModifier,
             contentScale = contentScale
         )
     }

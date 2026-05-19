@@ -1,6 +1,8 @@
 package com.example.artlery.ui.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,32 +23,31 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.artlery.R
-import com.example.artlery.model.Datasource
 import com.example.artlery.model.Piece
-import com.example.artlery.ui.components.FavPieceCard
 import com.example.artlery.ui.components.FavPieceCardLand
 import com.example.artlery.ui.components.MedHeaderComp
+import com.example.artlery.ui.components.PieceCard
 import com.example.artlery.ui.components.StandardTextComp
-
+import com.example.artlery.ui.viewmodels.FavoriteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavListCompactScreen(
-    pieces: MutableList<Piece>,
     navController: NavController,
     onRemoveFromFav: (Piece) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: FavoriteViewModel = viewModel()
 ) {
+    val favoritePieces by viewModel.favoritePieces.collectAsState()
 
     var showDialog by remember { mutableStateOf(false) }
     var pieceToUnfav by remember { mutableStateOf<Piece?>(null) }
 
     Column(modifier = modifier.fillMaxSize()) {
         MedHeaderComp(stringResource(R.string.artlery_fav_list))
-
-        val favoritePieces = pieces.filter { it.isFav }
 
         if (showDialog && pieceToUnfav != null) {
             AlertDialog(
@@ -69,27 +71,28 @@ fun FavListCompactScreen(
         }
 
         if (favoritePieces.isEmpty()) {
-            StandardTextComp(
-                text = stringResource(R.string.no_favorites_message),
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 32.dp),
-            )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = androidx.compose.ui.Alignment.Center
+            ) {
+                StandardTextComp(
+                    text = stringResource(R.string.no_favorites_message),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         } else {
             LazyColumn(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(10.dp)
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(8.dp)
             ) {
                 items(favoritePieces) { piece ->
-                    FavPieceCard(
+                    PieceCard(
                         piece = piece,
                         onCardClick = {
-                            navController.navigate("detail_fav/${piece.name}")
+                            navController.navigate("piece_detail/${piece.id}")
                         },
-                        onRemoveFromFav = {
-                            pieceToUnfav = piece
+                        onFavClick = { clickedPiece ->
+                            pieceToUnfav = clickedPiece
                             showDialog = true
                         }
                     )
@@ -101,20 +104,18 @@ fun FavListCompactScreen(
 
 @Composable
 fun FavListMedExpScreen(
-    pieces: MutableList<Piece>,
     navController: NavController,
     onRemoveFromFav: (Piece) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: FavoriteViewModel = viewModel()
 ) {
+    val favoritePieces by viewModel.favoritePieces.collectAsState()
 
     var showDialog by remember { mutableStateOf(false) }
     var pieceToUnfav by remember { mutableStateOf<Piece?>(null) }
 
     Column(modifier = modifier.fillMaxSize()) {
-
         MedHeaderComp(stringResource(R.string.artlery_fav_list))
-
-        val favoritePieces = pieces.filter { it.isFav }
 
         if (showDialog && pieceToUnfav != null) {
             AlertDialog(
@@ -155,7 +156,7 @@ fun FavListMedExpScreen(
                     FavPieceCardLand(
                         piece = piece,
                         onClick = {
-                            navController.navigate("detail_fav/${piece.name}")
+                            navController.navigate("piece_detail/${piece.id}")
                         },
                         onRemoveFromFav = {
                             pieceToUnfav = piece
@@ -171,15 +172,7 @@ fun FavListMedExpScreen(
 @Preview(showBackground = true)
 @Composable
 fun FavListScreenPreview() {
-    val allPieces = Datasource.pieceList()
-
-    val previewPieces = allPieces.mapIndexed { index, piece ->
-
-        if (index < 2) piece.copy(isFavInitial = true) else piece
-    }.toMutableList()
-
     FavListCompactScreen(
-        pieces = previewPieces,
         navController = NavController(LocalContext.current),
         onRemoveFromFav = {},
         modifier = Modifier

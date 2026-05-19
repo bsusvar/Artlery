@@ -5,19 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 data class Piece(
+    val id: Int,
     val name: String,
-    val photo: String,
     val author: String,
     val year: String,
     val style: String,
     val location: String,
     val description: String,
-    var isFavInitial: Boolean = false
+    val photo: String,
+    var isFav: Boolean = false
 ) {
-    var isFav by mutableStateOf(isFavInitial)
-
     fun containsText(query: String): Boolean {
-        val fullData = "$name $author $year $style $location $description"
+        val fullData = "$id $name $author $year $style $location $description $photo $isFav"
         return fullData.contains(query, ignoreCase = true)
     }
 }

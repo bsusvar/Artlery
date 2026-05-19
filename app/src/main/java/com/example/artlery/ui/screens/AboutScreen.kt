@@ -64,7 +64,6 @@ fun AboutContent(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Logo
         Image(
             painter = painterResource(id = R.drawable.a_icono),
             contentDescription = stringResource(R.string.logo_desc),

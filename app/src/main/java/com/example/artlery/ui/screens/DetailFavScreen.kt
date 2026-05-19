@@ -218,7 +218,6 @@ fun DetailFavScreen(
                 }
 
                 item {
-                    // Imagen
                     ImageComp(
                         drawable = Datasource.getDrawableIdByName(pieceData.photo),
                         contentDesc = stringResource(R.string.piece_image_desc),

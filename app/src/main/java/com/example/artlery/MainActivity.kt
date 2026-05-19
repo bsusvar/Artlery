@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -26,10 +27,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -42,6 +41,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.artlery.data.local.ArtDatabase
+import com.example.artlery.data.local.ArtworkEntity
+import com.example.artlery.data.repository.UserSettingsRepository
 import com.example.artlery.model.Datasource
 import com.example.artlery.model.Piece
 import com.example.artlery.ui.screens.AboutScreen
@@ -55,6 +57,7 @@ import com.example.artlery.ui.screens.ProfileCompactScreen
 import com.example.artlery.ui.theme.ArtleryComposeTheme
 import com.example.artlery.utils.getWindowSizeClass
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -73,17 +76,21 @@ class MainActivity : ComponentActivity() {
         }, 1500)
 
         setContent {
-            ArtleryComposeTheme {
-                ArtleryApp()
-            }
+            ArtleryApp()
         }
     }
 }
 
+data class BottomNavItem(
+    val route: String,
+    val icon: ImageVector,
+    val label: String
+)
+
 @Composable
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
     NavigationBar {
-        val items = listOf(
+        val items: List<BottomNavItem> = listOf(
             BottomNavItem(
                 "piece_list",
                 Icons.AutoMirrored.Filled.List,
@@ -118,46 +125,71 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
     }
 }
 
-
 @RequiresApi(Build.VERSION_CODES.O)
-@SuppressLint("ContextCastToActivity")
+@SuppressLint("ContextCastToActivity", "FlowOperatorInvokedInComposition")
 @Composable
 fun ArtleryApp() {
+    val context = LocalContext.current
+    val repository = remember { UserSettingsRepository(context.applicationContext) }
+    val scope = rememberCoroutineScope()
+    val dao = remember { ArtDatabase.getDatabase(context.applicationContext).artDao() }
+
+    val appTheme by repository.appThemeFlow.collectAsState(initial = "Sistema")
+
+    val useDarkTheme = when (appTheme) {
+        "Claro" -> false
+        "Oscuro" -> true
+        else -> isSystemInDarkTheme()
+    }
+
+    val userName by repository.userNameFlow.collectAsState(initial = "")
+    val isLogged = userName.isNotBlank()
+
     val pieces = remember {
         Datasource.getListXTimes(5).toMutableStateList()
     }
 
-    var userName by rememberSaveable { mutableStateOf("Visitante") }
-    var isLogged by rememberSaveable { mutableStateOf(false) }
-
-    val windowSize =
-        getWindowSizeClass(LocalContext.current as Activity)
+    val windowSize = getWindowSizeClass(context as Activity)
     val navController = rememberNavController()
     val currentRoute by navController.currentBackStackEntryFlow
         .map { it.destination.route }
         .collectAsState(initial = "")
 
-    val bottomNavRoutes = listOf("piece_list", "fav_list", "profile", "about")
     val showBottomBar = isLogged
 
     val onFavToggle: (Piece) -> Unit = { pieceToToggle ->
-        pieceToToggle.isFav = !pieceToToggle.isFav
+        val toggledState = !pieceToToggle.isFav
+        scope.launch {
+            val favoriteEntity = dao.getFavoriteById(pieceToToggle.id)
+
+            if (favoriteEntity != null && !toggledState) {
+                dao.deleteFavorite(favoriteEntity)
+            } else if (favoriteEntity == null && toggledState) {
+                val newEntity = ArtworkEntity(
+                    id = pieceToToggle.id,
+                    title = pieceToToggle.name,
+                    artist = pieceToToggle.author,
+                    date = pieceToToggle.year,
+                    style = pieceToToggle.style,
+                    location = pieceToToggle.location,
+                    description = pieceToToggle.description,
+                    imageUrl = pieceToToggle.photo
+                )
+                dao.insertFavorite(newEntity)
+            }
+        }
     }
 
     val onRemoveFromFav: (Piece) -> Unit = { pieceToRemove ->
-        pieceToRemove.isFav = false
+        scope.launch {
+            val favoriteEntity = dao.getFavoriteById(pieceToRemove.id)
+            if (favoriteEntity != null) {
+                dao.deleteFavorite(favoriteEntity)
+            }
+        }
     }
 
-    val onLogin: (String) -> Unit = { newName ->
-        userName = newName
-        isLogged = true
-    }
-    val onLogout: () -> Unit = {
-        userName = "Visitante"
-        isLogged = false
-    }
-
-    ArtleryComposeTheme {
+    ArtleryComposeTheme(darkTheme = useDarkTheme) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {},
@@ -173,150 +205,79 @@ fun ArtleryApp() {
                 startDestination = "profile",
                 modifier = Modifier.padding(innerPadding)
             ) {
-                // Lista de obras
                 composable("piece_list") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
                             PieceListCompactScreen(
-                                pieces = pieces,
                                 navController = navController,
                                 onFavToggle = onFavToggle,
-                                Modifier.padding(8.dp)
+                                modifier = Modifier.padding(8.dp)
                             )
                         }
-
                         else -> {
                             PieceListMedExpScreen(
-                                pieces = pieces,
                                 navController = navController,
                                 onFavToggle = onFavToggle,
-                                Modifier.padding(8.dp)
+                                modifier = Modifier.padding(8.dp)
                             )
                         }
                     }
                 }
-                // Lista de obras favoritas
                 composable("fav_list") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
                             FavListCompactScreen(
-                                pieces = pieces,
                                 navController = navController,
                                 onRemoveFromFav = onRemoveFromFav,
-                                Modifier.padding(8.dp)
+                                modifier = Modifier.padding(8.dp)
                             )
                         }
-
                         else -> {
                             FavListMedExpScreen(
-                                pieces = pieces,
                                 navController = navController,
                                 onRemoveFromFav = onRemoveFromFav,
-                                Modifier.padding(8.dp)
+                                modifier = Modifier.padding(8.dp)
                             )
                         }
                     }
                 }
-                // Perfil de usuario
                 composable("profile") {
                     when (windowSize) {
                         WindowWidthSizeClass.Compact -> {
                             ProfileCompactScreen(
-                                isLogged = isLogged,
-                                userName = userName,
-                                onLogin = onLogin,
-                                onLogout = onLogout,
-                                navController = navController,
+                                navController = navController
                             )
                         }
-
                         else -> {
                             ProfileCompactScreen(
-                                isLogged = isLogged,
-                                userName = userName,
-                                onLogin = onLogin,
-                                onLogout = onLogout,
                                 navController = navController,
-                                Modifier.padding(8.dp)
-                            )
-                        }
-                    }
-                }
-                // Ver obra en detalle desde la lista de obras
-                composable("piece_detail/{piece_name}") { it ->
-                    val pieceName = it.arguments?.getString("piece_name")
-                    val detailScreenToggle: (String) -> Unit = { name ->
-                        val pieceToToggle = pieces.find { p -> p.name == name }
-                        pieceToToggle?.let { onFavToggle(it) }
-                    }
-                    when (windowSize) {
-                        WindowWidthSizeClass.Compact -> {
-                            PieceDetailCompactScreen(
-                                pieceName = pieceName,
-                                navController = navController,
-                                onFavToggle = detailScreenToggle,
-                                pieces = pieces,
-                                modifier = Modifier.padding(8.dp)
-                            )
-                        }
-
-                        else -> {
-                            PieceDetailCompactScreen(
-                                pieceName,
-                                navController = navController,
-                                onFavToggle = detailScreenToggle,
-                                pieces = pieces,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
                     }
                 }
-                // Ver obra en detalle desde la lista de favoritos
-                composable("detail_fav/{piece_name}") { backStackEntry ->
-                    val pieceName = backStackEntry.arguments?.getString("piece_name")
+                composable("piece_detail/{piece_id}") { backStackEntry ->
+                    val pieceId = backStackEntry.arguments?.getString("piece_id")?.toIntOrNull()
 
-                    val detailScreenToggle: (String) -> Unit = { name ->
-                        val pieceToToggle = pieces.find { p -> p.name == name }
-                        pieceToToggle?.let { onFavToggle(it) }
-                    }
-
-                    when (windowSize) {
-                        WindowWidthSizeClass.Compact -> {
-                            DetailFavScreen(
-                                pieceName = pieceName,
-                                navController = navController,
-                                onFavToggle = detailScreenToggle,
-                                pieces = pieces,
-                                userName = userName,
-                            )
-                        }
-
-                        else -> {
-                            DetailFavScreen(
-                                pieceName = pieceName,
-                                navController = navController,
-                                onFavToggle = detailScreenToggle,
-                                pieces = pieces,
-                                userName = userName,
-                            )
-                        }
-                    }
+                    PieceDetailCompactScreen(
+                        artworkId = pieceId,
+                        navController = navController,
+                        userName = userName,
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
-                // Ver información sobre la aplicación
+                composable("detail_fav/{piece_id}") { backStackEntry ->
+                    val pieceId = backStackEntry.arguments?.getString("piece_id")?.toIntOrNull()
+
+                    PieceDetailCompactScreen(
+                        artworkId = pieceId,
+                        navController = navController,
+                        userName = userName,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
                 composable("about") {
-                    when (windowSize) {
-                        WindowWidthSizeClass.Compact -> {
-                            AboutScreen(
-                                Modifier.padding(8.dp)
-                            )
-                        }
-
-                        else -> {
-                            AboutScreen(
-                                Modifier.padding(8.dp)
-                            )
-                        }
-                    }
+                    AboutScreen(Modifier.padding(8.dp))
                 }
             }
         }
@@ -331,9 +292,3 @@ fun ArtleryAppPreview() {
         ArtleryApp()
     }
 }
-
-data class BottomNavItem(
-    val route: String,
-    val icon: ImageVector,
-    val label: String
-)
