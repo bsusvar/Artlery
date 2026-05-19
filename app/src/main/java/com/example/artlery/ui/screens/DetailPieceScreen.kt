@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.artlery.R
+import com.example.artlery.model.Comment
 import com.example.artlery.model.Piece
 import com.example.artlery.ui.components.CommentCard
 import com.example.artlery.ui.components.ImageComp
@@ -55,7 +56,6 @@ fun PieceDetailCompactScreen(
     val uiState by viewModel.uiState.collectAsState()
     val isFavorite by viewModel.isFavorite.collectAsState()
 
-    var showRemoveDialog by remember { mutableStateOf(false) }
     var showCommentDialog by remember { mutableStateOf(false) }
     var newCommentText by remember { mutableStateOf("") }
 
@@ -190,7 +190,7 @@ fun PieceDetailCompactScreen(
                     }
 
                     items(state.comments) { comment ->
-                        val legacyComment = com.example.artlery.ui.screens.Comment(
+                        val legacyComment = Comment(
                             id = comment.id,
                             author = comment.author,
                             text = comment.text,

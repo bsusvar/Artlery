@@ -29,7 +29,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -44,10 +43,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.artlery.data.local.ArtDatabase
 import com.example.artlery.data.local.ArtworkEntity
 import com.example.artlery.data.repository.UserSettingsRepository
-import com.example.artlery.model.Datasource
 import com.example.artlery.model.Piece
 import com.example.artlery.ui.screens.AboutScreen
-import com.example.artlery.ui.screens.DetailFavScreen
 import com.example.artlery.ui.screens.FavListCompactScreen
 import com.example.artlery.ui.screens.FavListMedExpScreen
 import com.example.artlery.ui.screens.PieceDetailCompactScreen
@@ -144,10 +141,6 @@ fun ArtleryApp() {
 
     val userName by repository.userNameFlow.collectAsState(initial = "")
     val isLogged = userName.isNotBlank()
-
-    val pieces = remember {
-        Datasource.getListXTimes(5).toMutableStateList()
-    }
 
     val windowSize = getWindowSizeClass(context as Activity)
     val navController = rememberNavController()

@@ -15,17 +15,6 @@ class com.example.artlery.data.repository.ArtRepository {
 }
 
 
-class com.example.artlery.model.Datasource {
-+ () -> List<Piece> pieceList
-+ (Int) -> MutableList<Piece> getListXTimes
-+ (String) -> Piece? getPieceByName
-+ (Int) -> MutableList<Piece> getSomeRandPieces
-+ Int getDrawableIdByName(String)
-}
-
-
-class com.example.artlery.ui.screens.Comment {
-}
 class com.example.artlery.ui.viewmodels.FavoriteViewModel {
 -  dao
 -  repository

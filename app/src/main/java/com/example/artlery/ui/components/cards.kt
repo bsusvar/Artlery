@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.artlery.R
-import com.example.artlery.model.Datasource
+import com.example.artlery.model.Comment
 import com.example.artlery.model.Piece
 
 @Composable
@@ -330,7 +330,7 @@ fun FavPieceCardLand(
 }
 
 @Composable
-fun CommentCard(comment: com.example.artlery.ui.screens.Comment, modifier: Modifier = Modifier) {
+fun CommentCard(comment: Comment, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
