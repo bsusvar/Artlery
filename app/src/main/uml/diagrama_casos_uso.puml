@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuario" as user
+
+usecase "Iniciar sesión" as UC_login
+usecase "Listar obras de arte" as UC_listar_obras
+usecase "Listar obras favoritas" as UC_listar_favoritas
+usecase "Ver detalles del perfil\nde usuario" as UC_perfil
+usecase "Ver información sobre\nla app" as UC_info
+usecase "Cerrar sesión" as UC_logout
+
+usecase "Añadir obra a\nfavoritos" as UC_add_favorito
+usecase "Ver detalles de la\nobra" as UC_ver_detalle
+usecase "Eliminar obra de\nfavoritos" as UC_del_favorito
+usecase "Dejar un comentario\nsobre la obra" as UC_comentar
+usecase "Enviar un email sobre\nla app" as UC_email
+
+user --> UC_login
+user --> UC_listar_obras
+user --> UC_listar_favoritas
+user --> UC_perfil
+user --> UC_info
+user --> UC_logout
+
+UC_add_favorito .> UC_listar_obras : <<extend>>
+UC_ver_detalle .> UC_listar_obras : <<extend>>
+UC_ver_detalle .> UC_listar_favoritas : <<extend>>
+UC_del_favorito .> UC_listar_obras : <<extend>>
+UC_del_favorito .> UC_listar_favoritas : <<extend>>
+
+UC_comentar .> UC_ver_detalle : <<extend>>
+
+UC_email .> UC_info : <<extend>>
+
+@enduml

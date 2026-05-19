@@ -1,0 +1,181 @@
+@startuml
+class com.example.artlery.ui.theme.ColorFamily {
+}
+class com.example.artlery.data.repository.ArtRepository {
+-  apiService
++ Flow<List<ArtworkEntity>> allFavorites
++ List<ArtworkDto> fetchArtworks()
++ ArtworkDto? fetchArtworkDetailFromApi(Int)
++ Flow<Boolean> isFavorite(Int)
++ ArtworkEntity? getFavoriteById(Int)
++ void saveFavorite(ArtworkEntity)
++ void removeFavorite(ArtworkEntity)
++ Flow<List<CommentEntity>> getComments(Int)
++ void addComment(CommentEntity)
+}
+
+
+class com.example.artlery.model.Datasource {
++ () -> List<Piece> pieceList
++ (Int) -> MutableList<Piece> getListXTimes
++ (String) -> Piece? getPieceByName
++ (Int) -> MutableList<Piece> getSomeRandPieces
++ Int getDrawableIdByName(String)
+}
+
+
+class com.example.artlery.ui.screens.Comment {
+}
+class com.example.artlery.ui.viewmodels.FavoriteViewModel {
+-  dao
+-  repository
++ StateFlow<List<Piece>> favoritePieces
++ void null()
+}
+
+
+interface com.example.artlery.data.api.ArtApiService {
++ void getArtworks(void)
++ void getArtworkDetail(void)
+}
+
+class com.example.artlery.data.api.ArtApi {
+-  BASE_URL
+-  json
++ ArtApiService retrofitService
+}
+
+class com.example.artlery.data.api.ArtworkResponse {
+}
+class com.example.artlery.data.api.ArtworkDetailResponse {
+}
+class com.example.artlery.data.api.ArtworkDto {
+}
+class com.example.artlery.model.Comment {
+}
+class com.example.artlery.data.local.CommentEntity {
+}
+class com.example.artlery.ui.viewmodels.ProfileViewModel {
+-  repository
++ StateFlow<String> userName
++ StateFlow<String> appTheme
++ void login(String)
++ void logout()
++ void updateTheme(String)
+}
+
+
+class com.example.artlery.data.local.ArtDatabase$Companion {
+- ArtDatabase? Instance
++ ArtDatabase getDatabase(Context)
+}
+
+
+abstract class com.example.artlery.data.local.ArtDatabase {
++ ArtDao artDao()
+}
+
+class com.example.artlery.data.repository.UserSettingsRepository$Companion {
++  USER_NAME
++  APP_THEME
+}
+
+class com.example.artlery.data.repository.UserSettingsRepository {
++ Flow<String> userNameFlow
++ Flow<String> appThemeFlow
++ void saveUsername(String)
++ void saveTheme(String)
++ void clearSession()
+}
+
+
+class com.example.artlery.ui.viewmodels.DetailUiState$Loading {
+}
+class com.example.artlery.ui.viewmodels.DetailUiState$Success {
+}
+class com.example.artlery.ui.viewmodels.DetailUiState$Error {
+}
+interface com.example.artlery.ui.viewmodels.DetailUiState {
+}
+class com.example.artlery.ui.viewmodels.ArtworkDetailViewModel {
+-  dao
+-  repository
+-  _artworkId
++ StateFlow<Int?> artworkId
++ StateFlow<Boolean> isFavorite
+- ArtworkEntity? currentArtworkDto
++ StateFlow<DetailUiState> uiState
++ void loadArtwork(Int?)
++ void toggleFavorite(() -> Unit)
++ void addComment(String,String,String)
+- String cleanHtml(String?)
+- Piece mapEntityToPiece(ArtworkEntity)
+}
+
+
+class com.example.artlery.MainActivity {
++ void onCreate(Bundle?)
+}
+
+class com.example.artlery.BottomNavItem {
+}
+class com.example.artlery.model.Piece {
++ Boolean containsText(String)
+}
+
+interface com.example.artlery.data.local.ArtDao {
++ void insertFavorite(ArtworkEntity)
++ void deleteFavorite(ArtworkEntity)
++ Flow<List<ArtworkEntity>> getAllFavorites()
++ Flow<Boolean> isFavorite(Int)
++ ArtworkEntity? getFavoriteById(Int)
++ void insertComment(CommentEntity)
++ Flow<List<CommentEntity>> getCommentsForArtwork(Int)
+}
+
+class com.example.artlery.ui.viewmodels.ArtUiState$Loading {
+}
+class com.example.artlery.ui.viewmodels.ArtUiState$Success {
+}
+class com.example.artlery.ui.viewmodels.ArtUiState$Error {
+}
+interface com.example.artlery.ui.viewmodels.ArtUiState {
+}
+class com.example.artlery.ui.viewmodels.ArtApiViewModel {
+-  dao
+-  repository
+-  _rawPieces
+-  _isLoading
+-  _isError
++ StateFlow<ArtUiState> uiState
++ void null()
++ void loadApiArtworks()
+- Piece mapDtoToPiece(ArtworkDto)
+}
+
+
+class com.example.artlery.data.local.ArtworkEntity {
+}
+
+
+androidx.lifecycle.AndroidViewModel <|-- com.example.artlery.ui.viewmodels.FavoriteViewModel
+androidx.lifecycle.AndroidViewModel <|-- com.example.artlery.ui.viewmodels.ProfileViewModel
+com.example.artlery.data.local.ArtDatabase +.. com.example.artlery.data.local.ArtDatabase$Companion
+androidx.room.RoomDatabase <|-- com.example.artlery.data.local.ArtDatabase
+com.example.artlery.data.repository.UserSettingsRepository +.. com.example.artlery.data.repository.UserSettingsRepository$Companion
+com.example.artlery.ui.viewmodels.DetailUiState +.. com.example.artlery.ui.viewmodels.DetailUiState$Loading
+com.example.artlery.ui.viewmodels.DetailUiState <|.. com.example.artlery.ui.viewmodels.DetailUiState$Loading
+com.example.artlery.ui.viewmodels.DetailUiState +.. com.example.artlery.ui.viewmodels.DetailUiState$Success
+com.example.artlery.ui.viewmodels.DetailUiState <|.. com.example.artlery.ui.viewmodels.DetailUiState$Success
+com.example.artlery.ui.viewmodels.DetailUiState +.. com.example.artlery.ui.viewmodels.DetailUiState$Error
+com.example.artlery.ui.viewmodels.DetailUiState <|.. com.example.artlery.ui.viewmodels.DetailUiState$Error
+androidx.lifecycle.AndroidViewModel <|-- com.example.artlery.ui.viewmodels.ArtworkDetailViewModel
+androidx.activity.ComponentActivity <|-- com.example.artlery.MainActivity
+com.example.artlery.ui.viewmodels.ArtUiState +.. com.example.artlery.ui.viewmodels.ArtUiState$Loading
+com.example.artlery.ui.viewmodels.ArtUiState <|.. com.example.artlery.ui.viewmodels.ArtUiState$Loading
+com.example.artlery.ui.viewmodels.ArtUiState +.. com.example.artlery.ui.viewmodels.ArtUiState$Success
+com.example.artlery.ui.viewmodels.ArtUiState <|.. com.example.artlery.ui.viewmodels.ArtUiState$Success
+com.example.artlery.ui.viewmodels.ArtUiState +.. com.example.artlery.ui.viewmodels.ArtUiState$Error
+com.example.artlery.ui.viewmodels.ArtUiState <|.. com.example.artlery.ui.viewmodels.ArtUiState$Error
+androidx.lifecycle.AndroidViewModel <|-- com.example.artlery.ui.viewmodels.ArtApiViewModel
+@enduml
